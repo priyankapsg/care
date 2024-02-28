@@ -6,6 +6,7 @@ import Home from "../pages/Home";
 import Loginscreen from "../pages/Loginscreen";
 import Registerscreen from "../pages/Registerscreen";
 import Admin from "../pages/Admin";
+import HelpReceiverDashboard from "../pages/Helpreceiver";
 
 const AppRouters = () => {
   return (
@@ -14,6 +15,7 @@ const AppRouters = () => {
       <Route path='/login' element={<Loginscreen />} />
       <Route path='/register' element={<Registerscreen />} />
       <Route path='/admin' element={<Admin />} />
+      <Route path='/help_reciever' element={<HelpReceiverDashboard />} />
       <Route path='/' element={<Navigate to='/home' />} />
       <Route path='/*' element={<Navigate to='/' />} />
     </Routes>

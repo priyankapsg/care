@@ -36,7 +36,7 @@ const Loginscreen = () => {
               navigate("/admin");
             } else {
               toast.success("Login successfully");
-              navigate("/home");
+              navigate("/help_reciever");
             }
 
             // toast.success(response.data.message, {
