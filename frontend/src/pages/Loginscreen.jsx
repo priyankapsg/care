@@ -30,7 +30,8 @@ const Loginscreen = () => {
           try {
             const response = await axios.post(`http://localhost:5000/api/user/login`, values);
 
-            if (response.data.userData && response.data.userData.role === 'admin') {
+            console.log("RESP", response);
+            if (response.data.isAdmin === true) {
               toast.success("Login successfully");
               navigate("/admin");
             } else {
