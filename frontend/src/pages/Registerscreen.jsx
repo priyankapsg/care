@@ -55,19 +55,18 @@ const Registerscreen = () => {
             formData.append("role", values.role);
             formData.append("document", values.document);
 
-            const response = await axios.post(`http://localhost:5000/api/user/register`, formData, {
+            await axios.post(`http://localhost:5000/api/user/register`, formData, {
               headers: {
                 "Content-Type": "multipart/form-data",
               },
-            });
+            }).then( (response) =>{
+              toast.success("Sign Up successfully");
+              navigate("/login");
+              resetForm();
+            }).catch ( (err) => {
+              toast.error("Sign Up failed");
+            })
 
-            if (!response.data || !response.data.message) {
-              throw new Error("An error occurred");
-            }
-            navigate("/login");
-            resetForm();
-
-            toast.success("Sign Up successful");
           } catch (error) {
             setErrors({ general: error.message });
             toast.error("Sign Up failed");

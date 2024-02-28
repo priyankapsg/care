@@ -31,14 +31,16 @@ const Loginscreen = () => {
             const response = await axios.post(`http://localhost:5000/api/user/login`, values);
 
             if (response.data.userData && response.data.userData.role === 'admin') {
+              toast.success("Login successfully");
               navigate("/admin");
             } else {
+              toast.success("Login successfully");
               navigate("/home");
             }
 
-            toast.success(response.data.message, {
-              position: toast.POSITION.BOTTOM_RIGHT,
-            });
+            // toast.success(response.data.message, {
+            //   position: toast.POSITION.BOTTOM_RIGHT,
+            // });
 
             sessionStorage.setItem("token", response.data.token);
             sessionStorage.setItem(
