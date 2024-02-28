@@ -2,6 +2,7 @@ import User from "../models/user.js";
 
 export const register = async (req, res, next) => {
     try {
+        console.log("RESP", req.body);
         const newUser = new User({...req.body});
         await newUser.save();
         res.status(200).send("User has been created.");

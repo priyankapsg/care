@@ -53,9 +53,9 @@ const Registerscreen = () => {
             formData.append("phoneNumber", values.phoneNumber);
             formData.append("aadharNumber", values.aadharNumber);
             formData.append("role", values.role);
-            // Append document file if needed: formData.append("document", values.document);
+            formData.append("document", values.document);
 
-            const response = await axios.post("/user/signup", formData, {
+            const response = await axios.post(`http://localhost:5000/api/user/register`, formData, {
               headers: {
                 "Content-Type": "multipart/form-data",
               },

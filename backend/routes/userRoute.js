@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require('../models/user')
+const multer = require('multer');
 // const OTPService = require('../services/otpService');
 // const from = "Vonage APIs"
 // const to = "917708426794"
@@ -47,7 +48,9 @@ const User = require('../models/user')
 //         res.status(500).json({ error: 'Internal Server Error' });
 //     }
 // });
-router.post("/register", async (req, res) => {
+const upload = multer();
+
+router.post("/register", upload.none(), async (req, res) => {
     const { firstName, lastName, email, password, phoneNumber, aadharNumber, role } = req.body;
     try {
         const newUser = new User({
