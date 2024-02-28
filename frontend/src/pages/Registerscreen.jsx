@@ -1,25 +1,28 @@
 import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import AxiosService from "../utils/ApiService";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import axios from "axios";
 
-const SignupSchema = Yup.object().shape({
+
+const users = Yup.object().shape({
   firstName: Yup.string()
     .min(3, "Too Short!")
     .max(50, "Too Long!")
     .required("Required"),
   lastName: Yup.string().max(50, "Too Long!").required("Required"),
   email: Yup.string().email("Invalid email").required("Required"),
-  phoneNumber: Yup.string().required("Phone number is required"),
   password: Yup.string()
-    .required("Required")
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-      "Make it More Strong"
-    ),
+    .required("Required"),
+  phoneNumber: Yup.string().required("Phone number is required"),
+  
+    // .matches(
+    //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+    //   "Make it More Strong"
+    // ) 
   aadharNumber: Yup.string().required("Aadhar number is required"),
+  role: Yup.string().required("please choose one"),
 });
 
 const Registerscreen = () => {
@@ -34,25 +37,25 @@ const Registerscreen = () => {
           firstName: "",
           lastName: "",
           email: "",
-          phoneNumber: "",
           password: "",
+          phoneNumber: "",
           aadharNumber: "",
           role: "",
         }}
-        validationSchema={SignupSchema}
+        validationSchema={users}
         onSubmit={async (values, { setSubmitting, setErrors, resetForm }) => {
           try {
             const formData = new FormData();
             formData.append("firstName", values.firstName);
             formData.append("lastName", values.lastName);
             formData.append("email", values.email);
-            formData.append("phoneNumber", values.phoneNumber);
             formData.append("password", values.password);
+            formData.append("phoneNumber", values.phoneNumber);
             formData.append("aadharNumber", values.aadharNumber);
             formData.append("role", values.role);
             // Append document file if needed: formData.append("document", values.document);
 
-            const response = await AxiosService.post("/user/signup", formData, {
+            const response = await axios.post("/user/signup", formData, {
               headers: {
                 "Content-Type": "multipart/form-data",
               },
@@ -153,13 +156,13 @@ const Registerscreen = () => {
             </div>
 
             {/* Add file upload input if needed */}
-            {/* <div>
+            <div>
               <label>Document:</label>
               <Field type='file' name='document' />
               {errors.document && touched.document && (
                 <p style={{ color: "red" }}>{errors.document}</p>
               )}
-            </div> */}
+            </div>
 
             
 

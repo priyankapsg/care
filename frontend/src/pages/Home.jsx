@@ -13,8 +13,7 @@ const Home = () => {
       <Navbar />
       <Header />
       <About /> 
-      <Travelers /> {/* Replace Travelers with Services */}
-      {/* Assuming you have a component named About */} {/* Assuming you have a component named Contact */}
+      <Travelers /> 
       <Footer />
     </>
   );

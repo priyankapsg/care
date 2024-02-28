@@ -11,51 +11,51 @@ const User = require('../models/user')
 //         .catch(err => { console.log('There was an error sending the messages.'); console.error(err); });
 // }
 // sendSMS();
-router.post("/verifyAadhar", async (req, res) => {
-    const { aadharNumber } = req.body;
-    try {
+// router.post("/verifyAadhar", async (req, res) => {
+//     const { aadharNumber } = req.body;
+//     try {
         
-        const isValidAadhar = true;
-        if (isValidAadhar) {
-            res.json({ success: true });
-        } else {
-            res.json({ success: false });
-        }
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
+//         const isValidAadhar = true;
+//         if (isValidAadhar) {
+//             res.json({ success: true });
+//         } else {
+//             res.json({ success: false });
+//         }
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ error: 'Internal Server Error' });
+//     }
+// });
 
-router.post("/sendOTP", async (req, res) => {
-    const { aadharNumber } = req.body;
-    try {
+// router.post("/sendOTP", async (req, res) => {
+//     const { aadharNumber } = req.body;
+//     try {
         
-        const otp = OTPService.generateOTP(); 
+//         const otp = OTPService.generateOTP(); 
 
-        const otpSent = OTPService.sendOTPToMobile(otp, aadharNumber); 
+//         const otpSent = OTPService.sendOTPToMobile(otp, aadharNumber); 
 
-        if (otpSent) {
+//         if (otpSent) {
            
-            res.json({ success: true });
-        } else {
+//             res.json({ success: true });
+//         } else {
             
-            res.json({ success: false });
-        }
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
+//             res.json({ success: false });
+//         }
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ error: 'Internal Server Error' });
+//     }
+// });
 router.post("/register", async (req, res) => {
-    const { firstName, lastName, email, phoneNumber, password, aadharNumber, role } = req.body;
+    const { firstName, lastName, email, password, phoneNumber, aadharNumber, role } = req.body;
     try {
         const newUser = new User({
             firstName,
             lastName,
             email,
-            phoneNumber,
             password,
+            phoneNumber,
             aadharNumber,
             role
         });

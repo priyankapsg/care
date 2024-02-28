@@ -4,6 +4,7 @@ import video from "../assets/video.mp4";
 
 const Header = () => {
   return (
+    
     <section id='Header' className='header flex container'>
       <div className='mainText'>
       <h1>Building Bridges of Hope and Help</h1>

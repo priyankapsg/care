@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import AxiosService from "../utils/ApiService";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 // import { useUserContext } from "../context/UserContext";
 
-const SignInSchema = Yup.object().shape({
+const users = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
   password: Yup.string().required("Password is required"),
 });
@@ -25,7 +24,7 @@ const Loginscreen = () => {
           email: "",
           password: "",
         }}
-        validationSchema={SignInSchema}
+        validationSchema={users}
         onSubmit={async (values, { setSubmitting, setErrors, resetForm }) => {
           try {
             const response = await AxiosService.post(`/user/login`, values);

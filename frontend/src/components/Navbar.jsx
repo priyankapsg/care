@@ -77,17 +77,18 @@ const Navbar = () => {
           <SiConsul />
         </div>
         {/* <div className='atb flex'>
-         
+{/*          
             <>
               <span onClick={() => navigate("/login")}>LOGIN</span>
             </>
           
-        </div> */}
+        // </div> */}
         <li className="nav-item">
                     <a className="nav-link" href="/login">
                       Login
                     </a>
                   </li>
+
       </div>
       <div className={noBg}>
         <div className='logoDiv'>

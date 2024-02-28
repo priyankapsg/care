@@ -1148,7 +1148,7 @@ h2 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: 200vh;
   background: hsl(0, 0%, 0%);
 }
 .SignUp h2 {
