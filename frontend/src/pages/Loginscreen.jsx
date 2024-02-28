@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import axios from "axios";
 // import { useUserContext } from "../context/UserContext";
 
 const users = Yup.object().shape({
@@ -27,7 +28,7 @@ const Loginscreen = () => {
         validationSchema={users}
         onSubmit={async (values, { setSubmitting, setErrors, resetForm }) => {
           try {
-            const response = await AxiosService.post(`/user/login`, values);
+            const response = await axios.post(`http://localhost:5000/api/user/login`, values);
 
             if (response.data.userData && response.data.userData.role === 'admin') {
               navigate("/admin");
