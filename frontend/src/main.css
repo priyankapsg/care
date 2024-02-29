@@ -1143,13 +1143,13 @@ h2 {
   background-color: var(--hoverColor);
 }
 
-.SignUp {
+/* .SignUp {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 200vh;
-  background: hsl(0, 0%, 0%);
+  background: hsl(0, 1%, 72%);
 }
 .SignUp h2 {
   color: var(--whiteColor);
@@ -1200,6 +1200,74 @@ h2 {
   cursor: pointer;
   transition: var(--transition);
 }
+.SignUp form button:hover {
+  background-color: var(--hoverColor);
+} */
+.SignUp {
+  display: flexbox;
+  flex-direction: column;
+  align-items: baseline;
+  justify-content: baseline;
+  height: 200vh; /* Adjusted height for better visibility */
+  background: linear-gradient(120deg, #3498db, #8e44ad); /* Updated background with gradient */
+}
+
+.SignUp h2 {
+  color: var(--whiteColor);
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.SignUp form {
+  display: flex;
+  flex-direction: column;
+  width: 500px; /* Reduced width for a more compact form */
+  border-radius: 10px;
+  padding: 30px; /* Reduced padding for a more compact form */
+  background: linear-gradient(120deg, #ffffff, #f9f9f9); /* Updated background with gradient */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Updated box shadow for better visibility */
+}
+
+.SignUp form div {
+  margin-bottom: 10px;
+}
+
+.SignUp form div label {
+  margin-bottom: 5px;
+  color: var(--textColor);
+  font-weight: bold;
+}
+
+.SignUp form div input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--borderColor);
+  color: var(--textColor);
+  transition: var(--transition);
+}
+
+.SignUp form div input:focus {
+  border: 1px solid var(--primaryColor);
+}
+
+.SignUp form div p {
+  color: var(--colorOne);
+  margin-top: 5px;
+}
+
+.SignUp form button {
+  margin-top: 20px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--primaryColor);
+  color: var(--whiteColor);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
 .SignUp form button:hover {
   background-color: var(--hoverColor);
 }

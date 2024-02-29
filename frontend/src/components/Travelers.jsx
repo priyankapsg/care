@@ -14,42 +14,42 @@ import service8 from "../assets/service8.jpg";
 const travelers = [
   {
     id: 1,
-    serviceImage: service1,
+    destinationImage: service1,
     serviceName: "BUYING MEDICINES",
   },
   {
     id: 2,
-    serviceImage: service2,
+    destinationImage: service2,
     serviceName: "MENTAL SUPPORT",
   },
   {
     id: 3,
-    serviceImage: service3,
+    destinationImage: service3,
     serviceName: "GROCERY SHOPPING",
   },
   {
     id: 4,
-    serviceImage: service4,
+    destinationImage: service4,
     serviceName: "MEAL PREPARATION",
   },
   {
     id: 5,
-    serviceImage: service5,
+    destinationImage: service5,
     serviceName: "COMPANION FOR WALKING",
   },
   {
     id: 6,
-    serviceImage: service6,
+    destinationImage: service6,
     serviceName: "MEDICAL TRANSPORTATION",
   },
   {
     id: 7,
-    serviceImage: service7,
+    destinationImage: service7,
     serviceName: "HOUSEHOLD WORKS",
   },
   {
     id: 8,
-    serviceImage: service8,
+    destinationImage: service8,
     serviceName: "BUYING FOOD",
   },
 ];
@@ -60,12 +60,12 @@ const Travelers = () => {
       <div className='sectionContainer'>
         <h2>Available Services</h2>
         <div className='travelersContainer grid'>
-          {travelers.map(({ id, serviceImage, serviceName }) => (
+          {travelers.map(({ id, destinationImage, serviceName }) => (
             <div key={id} className='singleService'>
               <img
-                src={serviceImage}
+                src={destinationImage}
                 alt='Service'
-                className='serviceImage'
+                className='destinationImage'
               />
               <div className='serviceName'>
                 <span>{serviceName}</span>

@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
-
+import "./style.css";
 
 const users = Yup.object().shape({
   firstName: Yup.string()
@@ -30,8 +30,21 @@ const Registerscreen = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <div className='SignUp'>
-      <h2>REGISTER</h2>
+    
+      <div class="box-form">
+	<div class="left">
+		<div class="overlay">
+		<h1>REGISTER</h1>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+		Curabitur et est sed felis aliquet sollicitudin</p>
+		<span>
+			{/* <p>login with social media</p>
+			<a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+			<a href="#"><i class="fa fa-twitter" aria-hidden="true"></i> Login with Twitter</a> */}
+		</span>
+		</div>
+	</div>
+    <div className='right'>
       <Formik
         initialValues={{
           firstName: "",
@@ -77,6 +90,7 @@ const Registerscreen = () => {
       >
         {({ errors, touched }) => (
           <Form>
+            <div class="inputs">
             <div>
               <label>First Name:</label>
               <Field type='text' name='firstName' />
@@ -141,13 +155,14 @@ const Registerscreen = () => {
               <label>Role:</label>
               <div>
                 <label>
+                  volunteer
                   <Field type='radio' name='role' value='volunteer' />
-                  Volunteer
                 </label>
                 <label>
+                  help receiver
                   <Field type='radio' name='role' value='helpReceiver' />
-                  Help Receiver
                 </label>
+                
               </div>
               {errors.role && touched.role && (
                 <p style={{ color: "red" }}>{errors.role}</p>
@@ -170,9 +185,11 @@ const Registerscreen = () => {
             <p>
               Already have an account? <Link to='/login'>login</Link>
             </p>
+            </div>
           </Form>
         )}
       </Formik>
+    </div>
     </div>
   );
 };

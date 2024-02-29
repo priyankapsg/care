@@ -1337,31 +1337,30 @@ h2{
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background: hsl(0deg 0% 0%);
+  background: linear-gradient(120deg, #3498db, #8e44ad); /* Updated background with gradient */
+  color: #fff; /* Updated text color for better contrast */
 
   h2 {
-    color: var(--whiteColor);
     margin-bottom: 20px;
     text-transform: uppercase;
     letter-spacing: 2px;
   }
 
   form {
-    display: flex;
+    display: flow-root;
     flex-direction: column;
     width: 300px;
-    border: 1px solid var(--borderColor);
+    border: 1px solid #ddd; /* Updated border color */
     border-radius: 10px;
-    padding: 20px;
-    background: var(--whiteColorDeam);
-    box-shadow: var(--boxShadow);
+    padding: 50px;
+    background: #fff; /* Updated background color */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Updated box shadow for better visibility */
 
     div {
       margin-bottom: 10px;
 
       label {
         margin-bottom: 5px;
-        color: var(--textColor);
         font-weight: bold;
       }
 
@@ -1369,17 +1368,15 @@ h2{
         width: 100%;
         padding: 10px;
         border-radius: 5px;
-        border: 1px solid var(--borderColor);
-        color: var(--textColor);
-        transition: var(--transition);
+        border: 1px solid #ccc; /* Updated border color */
+        transition: border-color 0.3s ease;
 
         &:focus {
-          border: 1px solid var(--primaryColor);
+          border-color: #3498db; /* Updated focus border color */
         }
       }
 
       p {
-        color: var(--colorOne);
         margin-top: 5px;
       }
     }
@@ -1389,17 +1386,18 @@ h2{
       padding: 10px;
       border: none;
       border-radius: 5px;
-      background-color: var(--primaryColor);
-      color: var(--whiteColor);
+      background-color: #3498db; /* Updated background color */
+      color: #fff;
       cursor: pointer;
-      transition: var(--transition);
+      transition: background-color 0.3s ease;
 
       &:hover {
-        background-color: var(--hoverColor);
+        background-color: #2980b9; /* Updated hover background color */
       }
     }
   }
 }
+
 
 // Booking section STYLING =====>
 .booking-details {

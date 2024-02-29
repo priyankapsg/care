@@ -4,6 +4,9 @@ import * as Yup from "yup";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
+import "./style.css";
+
+
 // import { useUserContext } from "../context/UserContext";
 
 const users = Yup.object().shape({
@@ -18,8 +21,20 @@ const Loginscreen = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <div className='SignIn'>
-      <h2>LOGIN</h2>
+    <div class="box-form">
+    <div class="left">
+      <div class="overlay">
+      <h1>LOGIN</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      Curabitur et est sed felis aliquet sollicitudin</p>
+      <span>
+        {/* <p>login with social media</p>
+        <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+        <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i> Login with Twitter</a> */}
+      </span>
+      </div>
+    </div>
+      <div className='right'>
       <Formik
         initialValues={{
           email: "",
@@ -64,6 +79,7 @@ const Loginscreen = () => {
         }}
       >
         <Form>
+        <div class="inputs">
           <div>
             <label>Email:</label>
             <Field type='email' name='email' />
@@ -104,12 +120,11 @@ const Loginscreen = () => {
             Not registered yet? <Link to='/register'>Register here</Link>.
           </p>
 
-          <p>
-            Forgot your password?
-            <Link to='/forgot-password'>Reset it here.</Link>
-          </p>
+          
+          </div>
         </Form>
       </Formik>
+    </div>
     </div>
   );
 };
