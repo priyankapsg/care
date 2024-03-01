@@ -44,14 +44,16 @@ const Loginscreen = () => {
         onSubmit={async (values, { setSubmitting, setErrors, resetForm }) => {
           try {
             const response = await axios.post(`http://localhost:5000/api/user/login`, values);
-
             console.log("RESP", response);
             if (response.data.isAdmin === true) {
               toast.success("Login successfully");
               navigate("/admin");
-            } else {
+            } else if (response.data.status === true){
               toast.success("Login successfully");
               navigate("/help_reciever");
+            } else {
+              toast.success(response.data.message);
+              navigate("/home");
             }
 
             // toast.success(response.data.message, {

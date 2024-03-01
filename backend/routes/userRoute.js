@@ -70,24 +70,32 @@ router.post("/register", upload.none(), async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password } = req.body;  
     try {
-        const user = await User.findOne({ email, password });
-        if (user) {
-            const temp = {
-                name: user.name,
-                email: user.email,
-                isAdmin: user.isAdmin,
-                _id: user._id,
-            };
-            res.send(temp);
-        } else {
-            return res.status(404).json({ message: 'Login Failed' });
+      const user = await User.findOne({ email, password });
+  
+      if (user) {
+        if (user.isAdmin === false && user.status === false) {
+          return res.status(200).json({ status: false, message: 'Admin will approve shortly, Please be patient' });
         }
+  
+        const responseData = {
+          name: user.name,
+          email: user.email,
+          isAdmin: user.isAdmin,
+          _id: user._id,
+        };
+
+        return res.status(200).json(responseData);
+      } else {
+        return res.status(400).json({ status: false, message: 'Login Failed' });
+      }
     } catch (error) {
-        return res.status(404).json({ error });
+      console.error('Login Error:', error);
+      return res.status(500).json({ status: false, message: 'Internal Server Error' });
     }
 });
+  
 
 router.get('/getallusers', async (req, res) => {
     try {
@@ -99,6 +107,31 @@ router.get('/getallusers', async (req, res) => {
     }
 });
 
+router.put('/update', async (req, res) => {
+    try {
+      const { email, status } = req.body;
+  
+      if (!email || typeof status !== 'boolean') {
+        return res.status(400).json({ message: 'Invalid request body' });
+      }
+    const filter = { email };
+    const update = {
+        $set: { status }
+    };
+    const updatedStatus = await User.findOneAndUpdate(filter, update, {
+        new: true
+      });
+  
+      if (!updatedStatus) {
+        return res.status(404).json({ message: 'Document not found' });
+      }
+  
+      res.status(200).json({ message: 'Status updated', updatedStatus });
+    } catch (error) {
+      console.error('Error:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  });
+  
+
 module.exports = router;
-
-
