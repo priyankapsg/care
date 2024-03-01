@@ -48,7 +48,7 @@ const Loginscreen = () => {
             if (response.data.isAdmin === true) {
               toast.success("Login successfully");
               navigate("/admin");
-            } else if (response.data.status === true){
+            } else if (response.data.isAdmin === false && response.data.status === true){
               toast.success("Login successfully");
               navigate("/help_reciever");
             } else {
