@@ -1,16 +1,13 @@
-/** @format */
-
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { SiConsul } from "react-icons/si";
 import { CgMenuGridO } from "react-icons/cg";
 
-
 const Navbar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [active, setActive] = useState("navBarMenu");
   const [noBg, addBg] = useState("navBarTwo");
-
 
   const showNavbar = () => {
     setActive("navBarMenu showNavBar");
@@ -20,8 +17,6 @@ const Navbar = () => {
     setActive("navBarMenu");
   };
 
-  
-
   const toggleNavbar = () => {
     if (active === "navBarMenu") {
       showNavbar();
@@ -30,8 +25,6 @@ const Navbar = () => {
     }
   };
 
-  
-
   const addBgColor = () => {
     if (window.scrollY >= 10) {
       addBg("navBarTwo navBar_With_Bg");
@@ -39,8 +32,6 @@ const Navbar = () => {
       addBg("navBarTwo");
     }
   };
-
-  
 
   useEffect(() => {
     const handleScroll = () => {
@@ -70,55 +61,49 @@ const Navbar = () => {
     }
   };
 
-  return (
-    <div className='navBar flex'>
-      <div className='navBarOne flex'>
-        <div>
-          <SiConsul />
-        </div>
-        {/* <div className='atb flex'>
-{/*          
-            <>
-              <span onClick={() => navigate("/login")}>LOGIN</span>
-            </>
-          
-        // </div> */}
-        <li className="nav-item">
-                    <a className="nav-link" href="/login">
-                      Login
-                    </a>
-                  </li>
+  // Check if the current location is the login or register screen
+  const isLoginOrRegisterScreen =
+    location.pathname === "/login" || location.pathname === "/register";
 
-      </div>
+  return (
+    <div className={`navBar ${isLoginOrRegisterScreen ? "flex" : ""}`}>
+      {!isLoginOrRegisterScreen && (
+        <div className="navBarOne flex">
+          <div>
+            <SiConsul />
+          </div>
+          <li className="nav-item">
+            <a className="nav-link" href="/login">
+              Login
+            </a>
+          </li>
+        </div>
+      )}
       <div className={noBg}>
-        <div className='logoDiv'>
+        <div className="logoDiv">
           <h1>CARELINKHUB</h1>
         </div>
         <div className={active}>
-          <ul className='menu flex'>
-            <li onClick={() => scrollToSection("Header")} className='listItem'>
+          <ul className="menu flex">
+            <li onClick={() => scrollToSection("Header")} className="listItem">
               Home
             </li>
-            <li onClick={() => scrollToSection("about")} className='listItem'>
+            <li onClick={() => scrollToSection("about")} className="listItem">
               About us
             </li>
             <li
               onClick={() => scrollToSection("Travelers")}
-              className='listItem'
+              className="listItem"
             >
-              services
+              Services
             </li>
-            <li onClick={() => scrollToSection("Footer")} className='listItem'>
+            <li onClick={() => scrollToSection("Footer")} className="listItem">
               Footer
             </li>
           </ul>
-          {/* <button className='btn flex btnOne' onClick={getFlights}>Book</button>
-          <button className='btn flex btnOne' onClick={getBookings}>Bookings</button> */}
-        </div> 
-        {/* <button className='btn flex btnTwo' onClick={getFlights}>Book</button>
-        <button className='btn flex btnTwo' onClick={getBookings}>Bookings</button> */}
-        <div onClick={toggleNavbar} className='toggleIcon'>
-          <CgMenuGridO className='icon' />
+        </div>
+        <div onClick={toggleNavbar} className="toggleIcon">
+          <CgMenuGridO className="icon" />
         </div>
       </div>
     </div>

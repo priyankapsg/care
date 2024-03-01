@@ -5,7 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 import "./style.css";
-
+import Navbar from "../components/Navbar";
 
 // import { useUserContext } from "../context/UserContext";
 
@@ -21,12 +21,13 @@ const Loginscreen = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
+    <div>
+      <Navbar/>
     <div class="box-form">
     <div class="left">
       <div class="overlay">
       <h1>LOGIN</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Curabitur et est sed felis aliquet sollicitudin</p>
+      <p>Unlock the door to endless possibilities. Sign in and embark on your journey.</p>
       <span>
         {/* <p>login with social media</p>
         <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
@@ -126,6 +127,7 @@ const Loginscreen = () => {
           </div>
         </Form>
       </Formik>
+    </div>
     </div>
     </div>
   );

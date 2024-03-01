@@ -5,6 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 import "./style.css";
+import Navbar from "../components/Navbar";
 
 const users = Yup.object().shape({
   firstName: Yup.string()
@@ -30,13 +31,13 @@ const Registerscreen = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    
+    <div>
+      <Navbar/>
       <div class="box-form">
 	<div class="left">
 		<div class="overlay">
 		<h1>REGISTER</h1>
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-		Curabitur et est sed felis aliquet sollicitudin</p>
+		<p>Create your account and unlock a world of opportunities. Join us today and make your mark.</p>
 		<span>
 			{/* <p>login with social media</p>
 			<a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
@@ -189,6 +190,7 @@ const Registerscreen = () => {
           </Form>
         )}
       </Formik>
+    </div>
     </div>
     </div>
   );

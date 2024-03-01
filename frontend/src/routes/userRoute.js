@@ -96,6 +96,30 @@ router.get('/getallusers', async (req, res) => {
     }
 });
 
+router.put('/profile', async (req, res) => {
+    const { firstName, email, phoneNumber, aadharNumber,role } = req.body;
+    
+    try {
+      const user = await User.findOne({ email });
+  
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      user.firstName = firstName;
+      user.email = email;
+      user.phoneNumber = phoneNumber;
+      user.aadharNumber = aadharNumber;
+      user.role = role;
+      await user.save();
+  
+      res.status(200).json({ message: 'Profile updated successfully', user });
+    } catch (error) {
+      console.error('Error updating user profile:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  });
+  
 module.exports = router;
 
 

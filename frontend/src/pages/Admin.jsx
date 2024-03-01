@@ -112,6 +112,7 @@ const Admin = () => {
               <th className={classes.tableHeaderCell}>Email</th>
               <th className={classes.tableHeaderCell}>Phone Number</th>
               <th className={classes.tableHeaderCell}>Aadhar Number</th>
+              <th className={classes.tableHeaderCell}>role</th>
               <th className={classes.tableHeaderCell}>Action</th>
             </tr>
           </thead>
@@ -122,6 +123,8 @@ const Admin = () => {
                 <td className={classes.tableCell}>{user.email}</td>
                 <td className={classes.tableCell}>{user.phoneNumber}</td>
                 <td className={classes.tableCell}>{user.aadharNumber}</td>
+                <td className={classes.tableCell}>{user.role}</td>
+
               {user.status === false ? 
                 <td className={classes.tableCell}>
                   <button className={classes.button} onClick={() => handleApprove(user.email)}>Approve</button>
