@@ -26,7 +26,7 @@ const Loginscreen = () => {
     <div class="box-form">
     <div class="left">
       <div class="overlay">
-      <h1>LOGIN</h1>
+      <h2>LOGIN</h2>
       <p>Unlock the door to endless possibilities. Sign in and embark on your journey.</p>
       <span>
         {/* <p>login with social media</p>

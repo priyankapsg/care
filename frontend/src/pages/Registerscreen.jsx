@@ -36,7 +36,7 @@ const Registerscreen = () => {
       <div class="box-form">
 	<div class="left">
 		<div class="overlay">
-		<h1>REGISTER</h1>
+		<h2>REGISTER</h2>
 		<p>Create your account and unlock a world of opportunities. Join us today and make your mark.</p>
 		<span>
 			{/* <p>login with social media</p>

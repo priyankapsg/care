@@ -117,7 +117,8 @@ h4 {
 h2 {
   font-size: 25px;
   padding: 1rem 0;
-  color: var(--blackColor);
+  color:  linear-gradient(45deg, #6b0ab1, #FF4B2B);
+  font-weight: 800;
 }
 
 .back-to-home-button {

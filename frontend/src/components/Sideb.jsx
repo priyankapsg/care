@@ -19,7 +19,7 @@ const Sideb = () => {
           <div className='sidebar-brand-icon rotate-n-15'>
             <i className='fas fa-laugh-wink'></i>
           </div>
-          <div className='sidebar-brand-text mx-3'>Welcome Admin</div>
+          <div className='sidebar-brand-text mx-3'>Welcome </div>
         </Link>
 
         <li className='nav-item active'>

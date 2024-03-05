@@ -377,7 +377,11 @@
   
   h1, .h1 {
     font-size: 2.5rem;
-  }
+    background: linear-gradient(45deg, #6b0ab1, #FF4B2B); /* Replace blue and cyan with your desired colors */
+    -webkit-background-clip: text; /* Ensures text is colored by the gradient */
+    -webkit-text-fill-color: transparent; /* Hides original text color */
+}
+
   
   h2, .h2 {
     font-size: 2rem;
