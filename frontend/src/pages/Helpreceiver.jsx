@@ -1,31 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@mui/styles';
 import axios from 'axios';
+import Sideb from '../components/Sideb';
 
 const useStyles = makeStyles((theme) => ({
-  // root: {
-  //   display: 'flex',
-  // },
-  // sidebar: {
-  //   width: '20%',
-  //   backgroundColor: '#f4f4f4',
-  //   padding: '10px',
-  // },
-  mainContent: {
-    // marginLeft: '20%',
-    padding: '10px',
+  root: {
+    display: 'flex',
+    height: '100vh', // Set the height to fill the viewport
+  },
+  content: {
+    flex: 1, // Allow the content to fill the available space
+    overflowX: 'auto', // Enable horizontal scrolling if needed
   },
   header: {
     backgroundColor: '#333',
     color: '#fff',
     padding: '10px',
-    textAlign: 'center',
-  },
-  footer: {
-    backgroundColor: '#333',
-    color: '#fff',
-    padding: '10px',
-    clear: 'both',
     textAlign: 'center',
   },
   table: {
@@ -57,89 +47,58 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const apiUrl = 'http://localhost:5000/api/user/profile';
+const apiUrl = 'http://localhost:5000/api/tasks'; // Change this API URL to the appropriate endpoint for Help Receiver tasks
 
-const Admin = () => {
-  const [users, setUsers] = useState([]);
+const HelpReceiverDashboard = () => {
+  const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
-    // Fetch user data from API
-    const fetchUsers = async () => {
+    // Fetch tasks data from API
+    const fetchTasks = async () => {
       try {
         const response = await axios.get(apiUrl);
-        setUsers(response.data);
+        setTasks(response.data);
       } catch (error) {
-        console.error('Error fetching users:', error);
+        console.error('Error fetching tasks:', error);
       }
     };
 
-    fetchUsers();
+    fetchTasks();
   }, []);
-
-
-  // const handleApprove = async (email) => {
-  //   try {
-  //     const response = await axios.put('http://localhost:5000/api/user/update', { email, status: true });
-  //     console.log("HANDLE",response);      
-  //     window.location.reload();
-  //   } catch (error) {
-  //     console.error('Error approving user:', error);
-  //   }
-  // };
 
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      {/* <div className={classes.sidebar}>
-        <h2>Sidebar</h2>
-        <ul>
-          <li>Item 1</li>
-          <li>Item 2</li>
-          <li>Item 3</li>
-        </ul>
-      </div> */}
-
-      <div className={classes.mainContent}>
+      <Sideb />
+      <div className={classes.content}>
         <header className={classes.header}>
-          <h1>PROFILE DETAILS</h1>
+          <h1>Help Receiver Dashboard</h1>
         </header>
 
         <table className={classes.table}>
           <thead>
             <tr>
-              <th className={classes.tableHeaderCell}>Name</th>
-              <th className={classes.tableHeaderCell}>Email</th>
-              <th className={classes.tableHeaderCell}>Phone Number</th>
-              <th className={classes.tableHeaderCell}>Aadhar Number</th>
-              <th className={classes.tableHeaderCell}>role</th>
+              <th className={classes.tableHeaderCell}>Task Name</th>
+              <th className={classes.tableHeaderCell}>Description</th>
+              <th className={classes.tableHeaderCell}>Volunteer Assigned</th>
+              <th className={classes.tableHeaderCell}>Status</th>
             </tr>
           </thead>
           <tbody>
-            {users.map(user => (
-              <tr key={user.id}>
-                <td className={classes.tableCell}>{user.firstName}</td>
-                <td className={classes.tableCell}>{user.email}</td>
-                <td className={classes.tableCell}>{user.phoneNumber}</td>
-                <td className={classes.tableCell}>{user.aadharNumber}</td>
-                <td className={classes.tableCell}>{user.role}</td>
-
-              {/* {user.status === false ? 
-                <td className={classes.tableCell}>
-                  <button className={classes.button} onClick={() => handleApprove(user.email)}>Approve</button>
-                </td>
-              : 'Approved'} */}
+            {tasks.map(task => (
+              <tr key={task.id}>
+                <td className={classes.tableCell}>{task.name}</td>
+                <td className={classes.tableCell}>{task.description}</td>
+                <td className={classes.tableCell}>{task.volunteer}</td>
+                <td className={classes.tableCell}>{task.status}</td>
               </tr>
             ))}
           </tbody>
         </table>
-
-        <footer className={classes.footer}>
-          {/* <p>Footer</p> */}
-        </footer>
       </div>
     </div>
   );
 };
 
-export default Admin;
+export default HelpReceiverDashboard;
