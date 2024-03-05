@@ -181,7 +181,7 @@ const Registerscreen = () => {
 
             
 
-            <button type='submit'>register</button>
+            <button class="button-88" type='submit'>register</button>
 
             <p>
               Already have an account? <Link to='/login'>login</Link>

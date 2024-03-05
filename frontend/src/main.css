@@ -1888,13 +1888,20 @@ h2 {
   }
 }/*# sourceMappingURL=main.css.map */
 .nav-link {
-  color: #0f7deb; /* Change the text color to a bright blue */
-  text-decoration: none; /* Remove the default underline */
-  font-weight: bold; /* Make the text bold */
-  transition: color 0.3s; /* Add a smooth color transition on hover */
+  display: inline-block;
+  padding: 0.5em 1em;
+  color: white;
+  background: linear-gradient(45deg, #FF416C, #FF4B2B); /* Gradient background color */
+  border: none;
+  border-radius: 0.3em;
+  text-decoration: none;
+  font-weight: bold;
   font-size: 16px;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Add transition effects */
 }
 
 .nav-link:hover {
-  color: #ff5722; /* Change the color on hover to a different color */
+  transform: translateY(-2px); /* Add a slight lift effect on hover */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow on hover */
 }
+
