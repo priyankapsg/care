@@ -1,33 +1,39 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@mui/styles';
 import axios from 'axios';
+import Sidebar from '../components/Sidebar';
 
 const useStyles = makeStyles((theme) => ({
-  // root: {
-  //   display: 'flex',
-  // },
+  root: {
+    display: 'flex',
+    height: '100vh', // Set the height to fill the viewport
+  },
+  content: {
+    flex: 1, // Allow the content to fill the available space
+    overflowX: 'auto', // Enable horizontal scrolling if needed
+  },
   // sidebar: {
   //   width: '20%',
   //   backgroundColor: '#f4f4f4',
   //   padding: '10px',
   // },
-  mainContent: {
-    // marginLeft: '20%',
-    padding: '10px',
-  },
+  // mainContent: {
+  //   width: '80%', // Adjusted to 80% to accommodate sidebar
+  //   padding: '10px',
+  // },
   header: {
     backgroundColor: '#333',
     color: '#fff',
     padding: '10px',
     textAlign: 'center',
   },
-  footer: {
-    backgroundColor: '#333',
-    color: '#fff',
-    padding: '10px',
-    clear: 'both',
-    textAlign: 'center',
-  },
+  // footer: {
+  //   backgroundColor: '#333',
+  //   color: '#fff',
+  //   padding: '10px',
+  //   clear: 'both',
+  //   textAlign: 'center',
+  // },
   table: {
     width: '100%',
     borderCollapse: 'collapse',
@@ -90,15 +96,21 @@ const Admin = () => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      {/* <div className={classes.sidebar}>
-        <h2>Sidebar</h2>
-        <ul>
-          <li>Item 1</li>
-          <li>Item 2</li>
-          <li>Item 3</li>
-        </ul>
-      </div> */}
+    <div className='admin'>
+      <div className='row'>
+      <Sidebar />
+    {/* <div className={classes.root}> */}
+      {/* <div className={classes.sidebar}> */}
+      {/* <div className='col content'> */}
+        {/* <h2>Admin Panel</h2>
+        <p>Username: Admin</p> */}
+        {/* Add profile details here */}
+        {/* <ul>
+          <li>Manage Users</li>
+          <li>Manage Issues</li>
+          <li>Logout</li>
+        </ul> */}
+      {/* </div> */}
 
       <div className={classes.mainContent}>
         <header className={classes.header}>
@@ -139,6 +151,9 @@ const Admin = () => {
           {/* <p>Footer</p> */}
         </footer>
       </div>
+    {/* </div> */}
+    {/* </div> */}
+    </div>
     </div>
   );
 };
