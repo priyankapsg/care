@@ -111,7 +111,7 @@ const Admin = () => {
           <li>Logout</li>
         </ul> */}
       {/* </div> */}
-
+    <div className='think'>
       <div className={classes.mainContent}>
         <header className={classes.header}>
           <h1>Admin Dashboard</h1>
@@ -153,6 +153,7 @@ const Admin = () => {
       </div>
     {/* </div> */}
     {/* </div> */}
+    </div>
     </div>
     </div>
   );

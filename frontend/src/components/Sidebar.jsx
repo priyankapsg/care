@@ -35,13 +35,13 @@ const Sidebar = () => {
 
         <li className='nav-item'>
           <Link className='nav-link collapsed' to='/create-flights'>
-            <i className='fas fa-fw fa-plane'></i>
+            <i className='fas fa-fw fa-user'></i>
             <span>profile details</span>
           </Link>
         </li>
         <li className='nav-item'>
           <Link className='nav-link collapsed' to='/edit-flights'>
-            <i className='fas fa-fw fa-edit'></i>
+            <i className='fas fa-fw fa-exclamation-triangle'></i>
             <span>Issues</span>
           </Link>
         </li>
