@@ -5,7 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 import "./style.css";
-import Navbar from "../components/Navbar";
+import SimpleNavbar from "../components/SimpleNavbar";
 
 const users = Yup.object().shape({
   firstName: Yup.string()
@@ -32,7 +32,7 @@ const Registerscreen = () => {
 
   return (
     <div>
-      <Navbar/>
+      <SimpleNavbar />
       <div class="box-form">
 	<div class="left">
 		<div class="overlay">
