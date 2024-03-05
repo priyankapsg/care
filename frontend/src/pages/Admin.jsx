@@ -96,10 +96,11 @@ const Admin = () => {
   const classes = useStyles();
 
   return (
-    <div className='admin'>
-      <div className='row'>
-      <Sidebar />
-    {/* <div className={classes.root}> */}
+    // <div className='admin'>
+    //   <div className='row'>
+      
+    <div className={classes.root}> 
+    <Sidebar />
       {/* <div className={classes.sidebar}> */}
       {/* <div className='col content'> */}
         {/* <h2>Admin Panel</h2>
@@ -111,8 +112,7 @@ const Admin = () => {
           <li>Logout</li>
         </ul> */}
       {/* </div> */}
-    <div className='think'>
-      <div className={classes.mainContent}>
+      <div className={classes.content}>
         <header className={classes.header}>
           <h1>Admin Dashboard</h1>
         </header>
@@ -147,15 +147,9 @@ const Admin = () => {
           </tbody>
         </table>
 
-        <footer className={classes.footer}>
-          {/* <p>Footer</p> */}
-        </footer>
       </div>
-    {/* </div> */}
-    {/* </div> */}
     </div>
-    </div>
-    </div>
+
   );
 };
 
