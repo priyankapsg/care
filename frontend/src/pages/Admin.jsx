@@ -69,7 +69,6 @@ const Admin = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    // Fetch user data from API
     const fetchUsers = async () => {
       try {
         const response = await axios.get(apiUrl);
@@ -78,7 +77,6 @@ const Admin = () => {
         console.error('Error fetching users:', error);
       }
     };
-
     fetchUsers();
   }, []);
 
@@ -86,7 +84,6 @@ const Admin = () => {
   const handleApprove = async (email) => {
     try {
       const response = await axios.put('http://localhost:5000/api/user/update', { email, status: true });
-      console.log("HANDLE",response);      
       window.location.reload();
     } catch (error) {
       console.error('Error approving user:', error);
@@ -94,7 +91,6 @@ const Admin = () => {
   };
 
   const classes = useStyles();
-
   return (
     // <div className='admin'>
     //   <div className='row'>
@@ -125,6 +121,7 @@ const Admin = () => {
               <th className={classes.tableHeaderCell}>Phone Number</th>
               <th className={classes.tableHeaderCell}>Aadhar Number</th>
               <th className={classes.tableHeaderCell}>role</th>
+              <th className={classes.tableHeaderCell}>Document</th>
               <th className={classes.tableHeaderCell}>Action</th>
             </tr>
           </thead>
@@ -136,7 +133,9 @@ const Admin = () => {
                 <td className={classes.tableCell}>{user.phoneNumber}</td>
                 <td className={classes.tableCell}>{user.aadharNumber}</td>
                 <td className={classes.tableCell}>{user.role}</td>
-
+                <td>
+                <img src={user.file} alt='' style={{ width: '200px', height: '200px' }} />
+                </td>
               {user.status === false ? 
                 <td className={classes.tableCell}>
                   <button className={classes.button} onClick={() => handleApprove(user.email)}>Approve</button>

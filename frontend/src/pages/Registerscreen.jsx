@@ -29,6 +29,19 @@ const users = Yup.object().shape({
 const Registerscreen = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [file, setFile] = useState(null);
+
+  const handleFileChange = (e) => {
+    var reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = () => {
+      console.log(reader.result);
+      setFile(reader.result);
+    }
+    reader.error = error => {
+      console.log("Error", error);
+    }
+  };
 
   return (
     <div>
@@ -67,7 +80,7 @@ const Registerscreen = () => {
             formData.append("phoneNumber", values.phoneNumber);
             formData.append("aadharNumber", values.aadharNumber);
             formData.append("role", values.role);
-            formData.append("document", values.document);
+            formData.append("file", file);
 
             await axios.post(`http://localhost:5000/api/user/register`, formData, {
               headers: {
@@ -173,7 +186,7 @@ const Registerscreen = () => {
             {/* Add file upload input if needed */}
             <div>
               <label>Document:</label>
-              <Field type='file' name='document' />
+              <Field type='file' accept="image/*" name="file" onChange={handleFileChange} />
               {errors.document && touched.document && (
                 <p style={{ color: "red" }}>{errors.document}</p>
               )}

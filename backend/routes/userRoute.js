@@ -51,7 +51,7 @@ const multer = require('multer');
 const upload = multer();
 
 router.post("/register", upload.none(), async (req, res) => {
-    const { firstName, lastName, email, password, phoneNumber, aadharNumber, role } = req.body;
+    const { firstName, lastName, email, password, phoneNumber, aadharNumber, role, file } = req.body;
     try {
         const newUser = new User({
             firstName,
@@ -60,7 +60,8 @@ router.post("/register", upload.none(), async (req, res) => {
             password,
             phoneNumber,
             aadharNumber,
-            role
+            role,
+            file
         });
         const user = await newUser.save();
         res.send('User registered successfully');
