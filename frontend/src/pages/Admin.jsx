@@ -2,38 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@mui/styles';
 import axios from 'axios';
 import Sidebar from '../components/Sidebar';
+import { toast } from "react-toastify";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    height: '100vh', // Set the height to fill the viewport
+    height: '100vh',
   },
   content: {
-    flex: 1, // Allow the content to fill the available space
-    overflowX: 'auto', // Enable horizontal scrolling if needed
+    flex: 1,
+    overflowX: 'auto',
   },
-  // sidebar: {
-  //   width: '20%',
-  //   backgroundColor: '#f4f4f4',
-  //   padding: '10px',
-  // },
-  // mainContent: {
-  //   width: '80%', // Adjusted to 80% to accommodate sidebar
-  //   padding: '10px',
-  // },
   header: {
     backgroundColor: '#333',
     color: '#fff',
     padding: '10px',
     textAlign: 'center',
   },
-  // footer: {
-  //   backgroundColor: '#333',
-  //   color: '#fff',
-  //   padding: '10px',
-  //   clear: 'both',
-  //   textAlign: 'center',
-  // },
   table: {
     width: '100%',
     borderCollapse: 'collapse',
@@ -84,30 +69,17 @@ const Admin = () => {
   const handleApprove = async (email) => {
     try {
       const response = await axios.put('http://localhost:5000/api/user/update', { email, status: true });
+      toast.success(response.data.msg);
       window.location.reload();
     } catch (error) {
-      console.error('Error approving user:', error);
+      toast.error(error.response.data.msg);
     }
   };
 
   const classes = useStyles();
   return (
-    // <div className='admin'>
-    //   <div className='row'>
-      
     <div className={classes.root}> 
     <Sidebar />
-      {/* <div className={classes.sidebar}> */}
-      {/* <div className='col content'> */}
-        {/* <h2>Admin Panel</h2>
-        <p>Username: Admin</p> */}
-        {/* Add profile details here */}
-        {/* <ul>
-          <li>Manage Users</li>
-          <li>Manage Issues</li>
-          <li>Logout</li>
-        </ul> */}
-      {/* </div> */}
       <div className={classes.content}>
         <header className={classes.header}>
           <h1>Admin Dashboard</h1>

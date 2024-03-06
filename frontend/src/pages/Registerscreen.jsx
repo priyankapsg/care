@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -17,11 +17,6 @@ const users = Yup.object().shape({
   password: Yup.string()
     .required("Required"),
   phoneNumber: Yup.string().required("Phone number is required"),
-  
-    // .matches(
-    //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-    //   "Make it More Strong"
-    // ) 
   aadharNumber: Yup.string().required("Aadhar number is required"),
   role: Yup.string().required("please choose one"),
 });
@@ -35,7 +30,6 @@ const Registerscreen = () => {
     var reader = new FileReader();
     reader.readAsDataURL(e.target.files[0]);
     reader.onload = () => {
-      console.log(reader.result);
       setFile(reader.result);
     }
     reader.error = error => {
@@ -51,11 +45,6 @@ const Registerscreen = () => {
 		<div class="overlay">
 		<h2>REGISTER</h2>
 		<p>Create your account and unlock a world of opportunities. Join us today and make your mark.</p>
-		<span>
-			{/* <p>login with social media</p>
-			<a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-			<a href="#"><i class="fa fa-twitter" aria-hidden="true"></i> Login with Twitter</a> */}
-		</span>
 		</div>
 	</div>
     <div className='right'>
@@ -82,21 +71,21 @@ const Registerscreen = () => {
             formData.append("role", values.role);
             formData.append("file", file);
 
-            await axios.post(`http://localhost:5000/api/user/register`, formData, {
+          const register = await axios.post(`http://localhost:5000/api/user/register`, formData, {
               headers: {
                 "Content-Type": "multipart/form-data",
               },
-            }).then( (response) =>{
-              toast.success("Sign Up successfully");
-              navigate("/login");
-              resetForm();
-            }).catch ( (err) => {
-              toast.error("Sign Up failed");
             })
-
+          
+          if(register.status === 200){
+            toast.success(register.data.msg);
+            navigate("/login/otp");
+            resetForm();
+          } else {
+            toast.error(register.data.msg);
+          }
           } catch (error) {
-            setErrors({ general: error.message });
-            toast.error("Sign Up failed");
+            toast.error(error.response.data.msg);
           } finally {
             setSubmitting(false);
           }
@@ -112,7 +101,6 @@ const Registerscreen = () => {
                 <p style={{ color: "red" }}>{errors.firstName}</p>
               )}
             </div>
-
             <div>
               <label>Last Name:</label>
               <Field type='text' name='lastName' />
@@ -120,7 +108,6 @@ const Registerscreen = () => {
                 <p style={{ color: "red" }}>{errors.lastName}</p>
               )}
             </div>
-
             <div>
               <label>Email:</label>
               <Field type='email' name='email' />
@@ -154,9 +141,6 @@ const Registerscreen = () => {
                 <p style={{ color: "red" }}>{errors.phoneNumber}</p>
               )}
             </div>
-
-           
-
             <div>
               <label>Aadhar Number:</label>
               <Field type='text' name='aadharNumber' />
@@ -164,7 +148,6 @@ const Registerscreen = () => {
                 <p style={{ color: "red" }}>{errors.aadharNumber}</p>
               )}
             </div>
-
             <div>
               <label>Role:</label>
               <div>
@@ -174,16 +157,13 @@ const Registerscreen = () => {
                 </label>
                 <label>
                   help receiver
-                  <Field type='radio' name='role' value='helpReceiver' />
+                  <Field type='radio' name='role' value='help_reciever' />
                 </label>
-                
               </div>
               {errors.role && touched.role && (
                 <p style={{ color: "red" }}>{errors.role}</p>
               )}
             </div>
-
-            {/* Add file upload input if needed */}
             <div>
               <label>Document:</label>
               <Field type='file' accept="image/*" name="file" onChange={handleFileChange} />
@@ -191,11 +171,7 @@ const Registerscreen = () => {
                 <p style={{ color: "red" }}>{errors.document}</p>
               )}
             </div>
-
-            
-
             <button class="button-88" type='submit'>register</button>
-
             <p>
               Already have an account? <Link to='/login'>login</Link>
             </p>

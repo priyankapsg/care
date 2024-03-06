@@ -34,6 +34,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    otp: {
+        type: String,
+        required: true
+    },
     isAdmin: {
         type: Boolean,
         default: false   
@@ -42,11 +46,9 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false   
     }
-    
 }, {
     timestamps: true
 });
 
 const userModal = mongoose.model('users', userSchema);
-
 module.exports = userModal;
