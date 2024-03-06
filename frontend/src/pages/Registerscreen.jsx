@@ -79,7 +79,7 @@ const Registerscreen = () => {
           
           if(register.status === 200){
             toast.success(register.data.msg);
-            navigate("/login/otp");
+            navigate("/otp");
             resetForm();
           } else {
             toast.error(register.data.msg);
