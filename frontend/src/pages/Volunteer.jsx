@@ -1,70 +1,104 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { makeStyles } from '@mui/styles';
+import axios from 'axios';
+import Sideb from '../components/Sideb';
 
-const VolunteerDashboard = () => {
-  const profileDetails = {
-    name: 'John Doe',
-    email: 'john@example.com',
-    location: 'City, Country',
-    phone: '+1234567890',
-    bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-  };
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    height: '100vh', // Set the height to fill the viewport
+  },
+  content: {
+    flex: 1, // Allow the content to fill the available space
+    overflowX: 'auto', // Enable horizontal scrolling if needed
+  },
+  header: {
+    backgroundColor: '#333',
+    color: '#fff',
+    padding: '10px',
+    textAlign: 'center',
+  },
+  table: {
+    width: '100%',
+    borderCollapse: 'collapse',
+  },
+  tableHeaderCell: {
+    backgroundColor: '#f2f2f2',
+    border: '1px solid #ddd',
+    padding: '8px',
+  },
+  tableCell: {
+    border: '1px solid #ddd',
+    padding: '8px',
+    textAlign: 'center',
+  },
+  button: {
+    backgroundColor: '#4CAF50',
+    color: 'white',
+    border: 'none',
+    padding: '5px 10px',
+    textAlign: 'center',
+    textDecoration: 'none',
+    display: 'inline-block',
+    fontSize: '14px',
+    margin: '2px',
+    cursor: 'pointer',
+    borderRadius: '4px',
+  },
+}));
 
-  const requestDetails = [
-    { id: 1, title: 'Request 1', status: 'Pending' },
-    { id: 2, title: 'Request 2', status: 'Completed' },
-    { id: 3, title: 'Request 3', status: 'Pending' },
-  ];
+const apiUrl = 'http://localhost:5000/api/tasks'; // Change this API URL to the appropriate endpoint for Help Receiver tasks
 
-  const creditsEarned = 50;
+const HelpReceiverDashboard = () => {
+  const [tasks, setTasks] = useState([]);
 
-  const feedback = [
-    { id: 1, user: 'User A', comment: 'Great volunteer, highly recommended!' },
-    { id: 2, user: 'User B', comment: 'Very helpful, thank you!' },
-  ];
+  useEffect(() => {
+    // Fetch tasks data from API
+    const fetchTasks = async () => {
+      try {
+        const response = await axios.get(apiUrl);
+        setTasks(response.data);
+      } catch (error) {
+        console.error('Error fetching tasks:', error);
+      }
+    };
+
+    fetchTasks();
+  }, []);
+
+  const classes = useStyles();
 
   return (
-    <div className="volunteer-dashboard">
-      <section className="profile-details">
-        <h2>Profile Details</h2>
-        <div>
-          <p>Name: {profileDetails.name}</p>
-          <p>Email: {profileDetails.email}</p>
-          <p>Location: {profileDetails.location}</p>
-          <p>Phone: {profileDetails.phone}</p>
-          <p>Bio: {profileDetails.bio}</p>
-        </div>
-      </section>
+    <div className={classes.root}>
+      <Sideb />
+      <div className={classes.content}>
+        <header className={classes.header}>
+          <h1>volunteer Dashboard</h1>
+        </header>
 
-      <section className="request-details">
-        <h2>Request Details</h2>
-        <ul>
-          {requestDetails.map(request => (
-            <li key={request.id}>
-              {request.title} - {request.status}
-            </li>
-          ))}
-        </ul>
-      </section>
-
-
-      <section className="credits-earned">
-        <h2>Credits Earned</h2>
-        <p>Total Credits: {creditsEarned}</p>
-      </section>
-
-      <section className="feedback">
-        <h2>Feedback</h2>
-        <ul>
-          {feedback.map(entry => (
-            <li key={entry.id}>
-              <p>User: {entry.user}</p>
-              <p>Comment: {entry.comment}</p>
-            </li>
-          ))}
-        </ul>
-      </section>
+        <table className={classes.table}>
+          <thead>
+            <tr>
+              <th className={classes.tableHeaderCell}>Task Name</th>
+              <th className={classes.tableHeaderCell}>Description</th>
+              <th className={classes.tableHeaderCell}>Volunteer Assigned</th>
+              <th className={classes.tableHeaderCell}>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {tasks.map(task => (
+              <tr key={task.id}>
+                <td className={classes.tableCell}>{task.name}</td>
+                <td className={classes.tableCell}>{task.description}</td>
+                <td className={classes.tableCell}>{task.volunteer}</td>
+                <td className={classes.tableCell}>{task.status}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
 
-export default VolunteerDashboard;
+export default HelpReceiverDashboard;

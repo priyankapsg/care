@@ -17,7 +17,7 @@ const Sideb = () => {
           to='/admin'
         >
           <div className='sidebar-brand-icon rotate-n-15'>
-            <i className='fas fa-laugh-wink'></i>
+            <i className='fas fa-laugh-wink' color="black"></i>
           </div>
           <div className='sidebar-brand-text mx-3'>Welcome </div>
         </Link>
