@@ -42,10 +42,13 @@ const Loginscreen = () => {
             } else if (response.data.status === "nonUser"){
               toast.success(response.data.msg);
               navigate("/home");
-            } else {
+            } else if(response.data.status === "Volunteer"){
               toast.success(response.data.message);
-              navigate(`/${response.data.status}`);
-            }
+              navigate(`/volunteer/${response.data.data}`);
+            } else if(response.data.status === "Help Reciever"){
+              toast.success(response.data.message);
+              navigate(`/help_receiver/${response.data.data}`);
+            } 
             resetForm && resetForm();
           } catch (error) {
             toast.error(error.response.data.msg);

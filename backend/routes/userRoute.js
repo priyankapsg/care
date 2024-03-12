@@ -84,9 +84,9 @@ router.post("/login", async (req, res) => {
         if(user.isAdmin === true){
           return res.status(200).json({ status : "admin", msg : 'Login successfully' });
         } else if (user.isAdmin === false && user.status === false) {
-          return res.status(200).json({ status : "nonUser", msg : 'Admin will approve it soon. Please wait patiently' });
+          return res.status(200).json({ status : "nonUser", data: user.id, msg : 'Admin will approve it soon. Please wait patiently' });
         } else {
-          return res.status(200).json({ status : user.role, msg : 'Login successfully' });
+          return res.status(200).json({ status : user.role, data: user.id, msg : 'Login successfully' });
         }
       } else {
         return res.status(400).json({ msg : 'Email / Password is incorrect. Please try again' });
@@ -123,6 +123,16 @@ router.put('/update', async (req, res) => {
       console.error('error:', error);
       return res.status(500).json({ msg : 'Something went wrong on our end. Please try again later' });
     }
+});
+
+router.get('/getProfile/:id', async (req, res) => {
+  try {
+      const user = await User.findOne({ _id : req.params.id });
+      return res.status(200).json(user);
+  } catch (error) {
+    console.error('error:', error);
+    return res.status(500).json({ msg : 'Something went wrong on our end. Please try again later' });
+  }
 });
 
 module.exports = router;

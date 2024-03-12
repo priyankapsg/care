@@ -153,11 +153,11 @@ const Registerscreen = () => {
               <div>
                 <label>
                   volunteer
-                  <Field type='radio' name='role' value='volunteer' />
+                  <Field type='radio' name='role' value='Volunteer' />
                 </label>
                 <label>
                   help receiver
-                  <Field type='radio' name='role' value='help_reciever' />
+                  <Field type='radio' name='role' value='Help Reciever' />
                 </label>
               </div>
               {errors.role && touched.role && (

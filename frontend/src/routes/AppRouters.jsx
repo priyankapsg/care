@@ -16,8 +16,8 @@ const AppRouters = () => {
       <Route path='/otp' element={<Otp />} />
       <Route path='/register' element={<Registerscreen />} />
       <Route path='/admin' element={<Admin />} />
-      <Route path='/help_reciever' element={<HelpReceiverDashboard />} />
-      <Route path='/volunteer' element={<Volunteer />} />
+      <Route path='/help_receiver/:id' element={<HelpReceiverDashboard />} />
+      <Route path='/volunteer/:id' element={<Volunteer />} />
       <Route path='/' element={<Navigate to='/home' />} />
       <Route path='/*' element={<Navigate to='/' />} />
     </Routes>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
 import axios from 'axios';
-import Sideb from '../components/Sideb';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,35 +47,95 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const apiUrl = 'http://localhost:5000/api/tasks'; // Change this API URL to the appropriate endpoint for Help Receiver tasks
+const apiUrl = 'http://localhost:5000/api/tasks';
 
 const HelpReceiverDashboard = () => {
+   
+  let { id } = useParams();
   const [tasks, setTasks] = useState([]);
-
+  const [users, setUsers] = useState([]);
+  
   useEffect(() => {
-    // Fetch tasks data from API
-    const fetchTasks = async () => {
+    fetchTasks();
+    fetchUserDetails();
+  }, []);
+
+  const fetchTasks = async () => {
+    try {
+      const response = await axios.get(apiUrl);
+      setTasks(response.data);
+    } catch (error) {
+      console.error('Error fetching tasks:', error);
+    }
+  };
+
+  const fetchUserDetails = async () => {
       try {
-        const response = await axios.get(apiUrl);
-        setTasks(response.data);
+        const response = await axios.get(`http://localhost:5000/api/user/getProfile/${id}`);
+        console.log("DETAILS", response);
+        setUsers(response.data);
       } catch (error) {
-        console.error('Error fetching tasks:', error);
+        console.error('Error fetching users:', error);
       }
     };
 
-    fetchTasks();
-  }, []);
 
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <Sideb />
+    <>
+      <ul
+        className='navbar-nav bg-gradient-primary sidebar sidebar-dark accordion'
+        id='accordionSidebar'
+      >
+        <div
+          className='sidebar-brand d-flex align-items-center justify-content-center'
+          >
+          <div className='sidebar-brand-icon rotate-n-15'>
+            <i className='fas fa-laugh-wink' color="black"></i>
+          </div>
+          <div className='sidebar-brand-text mx-3'>Welcome </div>
+        </div>
+
+        <li className='nav-item active'>
+          <div className='nav-link'>
+            <i className='fas fa-fw fa-tachometer-alt'></i>
+            <span>Dashboard</span>
+          </div>
+        </li>
+
+        <li className='nav-item'>
+          <div className='nav-link collapsed' to='/create-flights'>
+            <i className='fas fa-fw fa-user'></i>
+            <span>profile details</span>
+          </div>
+        </li>
+        <li className='nav-item'>
+          <div className='nav-link collapsed' to='/edit-flights'>
+            <i className='fas fa-fw fa-question-circle'></i>
+            <span>view requests</span>
+          </div>
+        </li>
+        <li className='nav-item'>
+          <div className='nav-link collapsed' to='/edit-flights'>
+            <i className='fas fa-fw fa-check-circle'></i>
+            <span>completed tasks</span>
+          </div>
+        </li>
+        <li className='nav-item'>
+          <Link className='nav-link collapsed' to='/login'>
+            <i className='fas fa-fw fa-edit'></i>
+            <span>logout</span>
+          </Link>
+        </li>
+      </ul>
+    </>
       <div className={classes.content}>
         <header className={classes.header}>
-          <h1>volunteer Dashboard</h1>
+          <h1>Volunteer Dashboard</h1>
         </header>
-
+       <>
         <table className={classes.table}>
           <thead>
             <tr>
@@ -96,6 +156,14 @@ const HelpReceiverDashboard = () => {
             ))}
           </tbody>
         </table>
+       </>
+
+       <>
+      Name : {users.firstName} {users.lastName}  <br/>
+      Email : {users.email} <br/>
+      Phone Number : {users.phoneNumber} <br/>
+      Aadhar Number : {users.aadharNumber} <br/>
+       </>
       </div>
     </div>
   );
