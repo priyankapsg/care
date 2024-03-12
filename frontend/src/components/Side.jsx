@@ -4,7 +4,7 @@ import React from "react";
 import "../Dashboard.css";
 import { Link , useNavigate } from "react-router-dom";
 
-const Sideb = () => {
+const Side = () => {
   const navigate = useNavigate();
   return (
     <>
@@ -42,7 +42,7 @@ const Sideb = () => {
         <li className='nav-item'>
           <Link className='nav-link collapsed' to='/edit-flights'>
             <i className='fas fa-fw fa-question-circle'></i>
-            <span>view requests</span>
+            <span>request for help</span>
           </Link>
         </li>
         <li className='nav-item'>
@@ -79,4 +79,4 @@ const Sideb = () => {
   );
 };
 
-export default Sideb;
+export default Side;

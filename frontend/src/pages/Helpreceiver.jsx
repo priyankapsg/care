@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@mui/styles';
 import axios from 'axios';
-import Sideb from '../components/Sideb';
+import Side from '../components/Side';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -70,7 +70,7 @@ const HelpReceiverDashboard = () => {
 
   return (
     <div className={classes.root}>
-      <Sideb />
+      <Side />
       <div className={classes.content}>
         <header className={classes.header}>
           <h1>Help Receiver Dashboard</h1>
