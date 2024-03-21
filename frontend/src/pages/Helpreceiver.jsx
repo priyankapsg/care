@@ -2,11 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
 import axios from 'axios';
+import service1Image from '../assets/service1.jpg';
+import service2Image from '../assets/service2.jpg';
+import service3Image from '../assets/service3.jpg';
 
 // Define Services Component
 const Services = ({ setService }) => {
   // Define your services and display them as needed
-  const services = ['Service 1', 'Service 2', 'Service 3'];
+  const services = [
+    { name: 'Service 1', image: service1Image },
+    { name: 'Service 2', image: service2Image },
+    { name: 'Service 3', image: service3Image }
+  ];
 
   const handleServiceClick = (serviceName) => {
     setService(serviceName);
@@ -19,10 +26,11 @@ const Services = ({ setService }) => {
       {/* Example: */}
       {services.map(service => (
         <img 
-          key={service} 
-          src={`service_image_url_${service}`} 
-          alt={service} 
-          onClick={() => handleServiceClick(service)} 
+        key={service.name} 
+        src={service.image} 
+        alt={service.name} 
+        onClick={() => handleServiceClick(service.name)} 
+        style={{ width: '200px', height: 'auto' }}
         />
       ))}
     </div>
@@ -108,7 +116,7 @@ const HelpReceiverDashboard = () => {
           </div>
         </li>
         <li className='nav-item'>
-          <div className='nav-link collapsed' onClick={() => { setShowProfile(true); setShowServices(false); }}>
+          <div className='nav-link collapsed' onClick={() => { setShowProfile(true); setShowServices(false); setSelectedService(false)}}>
             <i className='fas fa-fw fa-user'></i>
             <span>Profile Details</span>
           </div>
