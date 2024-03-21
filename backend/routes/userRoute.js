@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const User = require('../models/user')
+const User = require('../models/user');
+const Help = require('../models/helpReceiver');
 const multer = require('multer');
 const nodemailer = require('nodemailer');
 const upload = multer();
@@ -129,6 +130,36 @@ router.get('/getProfile/:id', async (req, res) => {
   try {
       const user = await User.findOne({ _id : req.params.id });
       return res.status(200).json(user);
+  } catch (error) {
+    console.error('error:', error);
+    return res.status(500).json({ msg : 'Something went wrong on our end. Please try again later' });
+  }
+});
+
+router.post("/help", upload.none(), async (req, res) => {
+  try {
+      const { user_id, age, gender, address, city, timeduration } = req.body;
+
+      const newUser = new Help({
+        user_id,
+        age, 
+        gender, 
+        address, 
+        city, 
+        timeduration
+        });
+        await newUser.save();
+        return res.status(200).json({ msg : "Success! You're now registered" });
+      } catch (error) { 
+      console.error('error:', error);
+      return res.status(500).json({ msg : 'Something went wrong on our end. Please try again later' });
+    }
+});
+
+router.get('/getallhelp', async (req, res) => {
+  try {
+      const nonadminusers = await Help.find({ status: false });
+      return res.status(200).json(nonadminusers);
   } catch (error) {
     console.error('error:', error);
     return res.status(500).json({ msg : 'Something went wrong on our end. Please try again later' });

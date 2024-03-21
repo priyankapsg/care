@@ -2,51 +2,163 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
 import axios from 'axios';
-import service1Image from '../assets/service1.jpg';
-import service2Image from '../assets/service2.jpg';
-import service3Image from '../assets/service3.jpg';
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import { toast } from "react-toastify";
+import service1 from "../assets/service1.jpg";
+import service2 from "../assets/service2.jpg";
+import service3 from "../assets/service3.jpg";
+import service4 from "../assets/service4.jpg";
+import service5 from "../assets/service5.jpg";
+import service6 from "../assets/service6.jpg";
+import service7 from "../assets/service7.jpg";
+import service8 from "../assets/service8.jpg";
+import "./style.css";
 
-// Define Services Component
-const Services = ({ setService }) => {
-  // Define your services and display them as needed
-  const services = [
-    { name: 'Service 1', image: service1Image },
-    { name: 'Service 2', image: service2Image },
-    { name: 'Service 3', image: service3Image }
-  ];
+const travelers = [
+  {
+    id: 1,
+    destinationImage: service1,
+    serviceName: "BUYING MEDICINES",
+  },
+  {
+    id: 2,
+    destinationImage: service2,
+    serviceName: "MENTAL SUPPORT",
+  },
+  {
+    id: 3,
+    destinationImage: service3,
+    serviceName: "GROCERY SHOPPING",
+  },
+  {
+    id: 4,
+    destinationImage: service4,
+    serviceName: "MEAL PREPARATION",
+  },
+  {
+    id: 5,
+    destinationImage: service5,
+    serviceName: "COMPANION FOR WALKING",
+  },
+  {
+    id: 6,
+    destinationImage: service6,
+    serviceName: "MEDICAL TRANSPORTATION",
+  },
+  {
+    id: 7,
+    destinationImage: service7,
+    serviceName: "HOUSEHOLD WORKS",
+  },
+  {
+    id: 8,
+    destinationImage: service8,
+    serviceName: "BUYING FOOD",
+  },
+];
 
-  const handleServiceClick = (serviceName) => {
-    setService(serviceName);
-  };
+const users = Yup.object().shape({
+  age: Yup.string().required("Age is required"),
+  gender: Yup.string().required("Gender is required"),
+  address: Yup.string().required("Address is required"),
+  city: Yup.string().required("City is required"),
+  timeduration: Yup.string().required("Time Duration is required")
+});
 
+const HelpRequestForm = () => {
+  let { id } = useParams();
   return (
     <div>
-      <h2>Services</h2>
-      {/* Display images of services */}
-      {/* Example: */}
-      {services.map(service => (
-        <img 
-        key={service.name} 
-        src={service.image} 
-        alt={service.name} 
-        onClick={() => handleServiceClick(service.name)} 
-        style={{ width: '200px', height: 'auto' }}
-        />
-      ))}
-    </div>
+  <div class="box-form">
+    <div className='right'>
+    <Formik
+      initialValues={{
+        user_id : id,
+        age: "",
+        gender: "",
+        address: "",
+        city: "",
+        timeduration: ""
+      }}
+      validationSchema={users}
+      onSubmit={async (values, { setSubmitting, resetForm }) => {
+        try {
+          const response = await axios.post(`http://localhost:5000/api/user/help`, values);
+          if(response.status === 200){
+            toast.success(response.data.msg);
+            setTimeout(() => {
+            window.location.reload();  
+            }, 2000);
+          } else {
+            toast.error(response.data.msg);
+          }
+        } catch (error) {
+          toast.error(error.response.data.msg);
+        } finally {
+          setSubmitting && setSubmitting(false);
+        }
+      }}
+    >
+      <Form>
+      <div class="inputs">
+        <div>
+          <label>Age:</label>
+          <Field type='text' name='age' />
+          <ErrorMessage
+            name='age'
+            component='div'
+            style={{ color: "red" }}
+          />
+        </div>
+        <div>
+          <label>Gender:</label>
+          <Field type='text' name='gender' />
+          <ErrorMessage
+            name='gender'
+            component='div'
+            style={{ color: "red" }}
+          />
+        </div>
+        <div>
+          <label>Address:</label>
+          <Field type='text' name='address' />
+          <ErrorMessage
+            name='address'
+            component='div'
+            style={{ color: "red" }}
+          />
+        </div>
+        <div>
+          <label>City:</label>
+          <Field type='text' name='city' />
+          <ErrorMessage
+            name='city'
+            component='div'
+            style={{ color: "red" }}
+          />
+        </div>
+        <div>
+          <label>Time Duration:</label>
+          <Field type='text' name='timeduration' />
+          <ErrorMessage
+            name='timeduration'
+            component='div'
+            style={{ color: "red" }}
+          />
+        </div>
+        <>
+        <button type='submit'>Submit</button>
+        </>
+        </div>
+      </Form>
+    </Formik>
+  </div>
+  </div>
+  </div>
   );
 };
 
-// Define Help Request Form Component
-const HelpRequestForm = ({ serviceName }) => {
-  // Implement your help request form here
-  return (
-    <div>
-      <h2>Help Request Form for {serviceName}</h2>
-      {/* Your form elements go here */}
-    </div>
-  );
-};
 const ProfileDetails = ({ users }) => {
   return (
     <div>
@@ -76,14 +188,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const apiUrl = 'http://localhost:5000/api/tasks';
-
 const HelpReceiverDashboard = () => {
   let { id } = useParams();
   const [users, setUsers] = useState(null);
   const [showProfile, setShowProfile] = useState(false);
   const [showServices, setShowServices] = useState(false);
-  const [selectedService, setSelectedService] = useState(null);
+  const [showForm, setShowForm] = useState(false);
+  const [showTask, setShowTask] = useState(false);
+  const [selectedService, setSelectedService] = useState(false);
 
   useEffect(() => {
     fetchUserDetails();
@@ -116,19 +228,34 @@ const HelpReceiverDashboard = () => {
           </div>
         </li>
         <li className='nav-item'>
-          <div className='nav-link collapsed' onClick={() => { setShowProfile(true); setShowServices(false); setSelectedService(false)}}>
+          <div className='nav-link collapsed' onClick={() => { 
+            setShowProfile(true); 
+            setShowServices(false); 
+            setShowTask(false);
+            setShowForm(false);
+            }}>
             <i className='fas fa-fw fa-user'></i>
             <span>Profile Details</span>
           </div>
         </li>
         <li className='nav-item'>
-          <div className='nav-link collapsed' onClick={() => {setShowProfile(false); setShowServices(true)}}>
+          <div className='nav-link collapsed' onClick={() => {
+            setShowProfile(false); 
+            setShowServices(true); 
+            setShowTask(false);
+            setShowForm(false);
+            }}>
             <i className='fas fa-fw fa-question-circle'></i>
             <span>Request for Help</span>
           </div>
         </li>
         <li className='nav-item'>
-          <div className='nav-link collapsed'>
+          <div className='nav-link collapsed' onClick={() => {
+            setShowProfile(true); 
+            setShowServices(false); 
+            setShowTask(false);
+            setShowForm(false);
+            }}>
             <i className='fas fa-fw fa-check-circle'></i>
             <span>Completed Tasks</span>
           </div>
@@ -139,16 +266,40 @@ const HelpReceiverDashboard = () => {
             <span>Logout</span>
           </Link>
         </li>
-
-        {/* Sidebar code */}
       </ul>
       <div className={classes.content}>
         <header className={classes.header}>
           <h1>Help Receiver Dashboard</h1>
         </header>
         
-        {showProfile && users && <ProfileDetails users={users} />}
-        {showServices && <Services setService={setSelectedService} />}
+        {showProfile && <ProfileDetails users={users} />}
+        {showServices &&             
+        <div id="Travelers" className='travelers container section'>
+        <div className='sectionContainer'>
+        <div className='travelersContainer grid'>
+          {travelers.map(({ id, destinationImage, serviceName }) => (
+            <div key={id} className='singleService' onClick={() => { 
+              setShowProfile(false); 
+              setShowServices(false); 
+              setShowTask(false);
+              setShowForm(true);
+              }}
+            >
+              <img
+                src={destinationImage}
+                alt='Service'
+                className='destinationImage'
+              />
+              <div className='serviceName'>
+                <span>{serviceName}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>}
+        {showTask && <Services setService={setSelectedService} />}
+        {showForm && <HelpRequestForm />}
         {selectedService && <HelpRequestForm serviceName={selectedService} />}
       </div>
     </div>
