@@ -5,25 +5,17 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    age: {
+    fromTime: {
         type: String,
         required: true
     },
-    gender: {
+    toTime: {
         type: String,
         required: true
     },
-    address: {
+    comments: {
         type: String,
         required: true,
-    },
-    city: {
-        type: String,
-        required: true
-    },
-    timeduration: {
-        type: String,
-        required: true
     },
     status: {
         type: Boolean,

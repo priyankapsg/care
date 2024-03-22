@@ -8,7 +8,7 @@ const upload = multer();
 
 router.post("/register", upload.none(), async (req, res) => {
   try {
-      const { firstName, lastName, email, password, phoneNumber, aadharNumber, role, file } = req.body;
+      const { firstName, lastName, age, gender, address, city, email, password, phoneNumber, aadharNumber, role, file } = req.body;
       const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -38,6 +38,10 @@ router.post("/register", upload.none(), async (req, res) => {
       const newUser = new User({
             firstName,
             lastName,
+            age,
+            gender,
+            address,
+            city,
             email,
             password,
             phoneNumber,
@@ -138,15 +142,13 @@ router.get('/getProfile/:id', async (req, res) => {
 
 router.post("/help", upload.none(), async (req, res) => {
   try {
-      const { user_id, age, gender, address, city, timeduration } = req.body;
+      const { user_id, fromTime, toTime, comments } = req.body;
 
       const newUser = new Help({
         user_id,
-        age, 
-        gender, 
-        address, 
-        city, 
-        timeduration
+        fromTime, 
+        toTime, 
+        comments
         });
         await newUser.save();
         return res.status(200).json({ msg : "Success! You're now registered" });

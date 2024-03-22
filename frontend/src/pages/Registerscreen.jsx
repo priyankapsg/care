@@ -13,6 +13,10 @@ const users = Yup.object().shape({
     .max(50, "Too Long!")
     .required("Required"),
   lastName: Yup.string().max(50, "Too Long!").required("Required"),
+  age: Yup.number().positive().integer().required("Age is required"),
+  gender: Yup.string().required("Gender is required"),
+  address: Yup.string().required("Address is required"),
+  city: Yup.string().required("City is required"),
   email: Yup.string().email("Invalid email").required("Required"),
   password: Yup.string()
     .required("Required"),
@@ -52,6 +56,10 @@ const Registerscreen = () => {
         initialValues={{
           firstName: "",
           lastName: "",
+          age: "",
+          gender: "",
+          address: "",
+          city: "",
           email: "",
           password: "",
           phoneNumber: "",
@@ -64,6 +72,10 @@ const Registerscreen = () => {
             const formData = new FormData();
             formData.append("firstName", values.firstName);
             formData.append("lastName", values.lastName);
+            formData.append("age", values.age);
+            formData.append("gender", values.gender);
+            formData.append("address", values.address);
+            formData.append("city", values.city);
             formData.append("email", values.email);
             formData.append("password", values.password);
             formData.append("phoneNumber", values.phoneNumber);
@@ -106,6 +118,34 @@ const Registerscreen = () => {
               <Field type='text' name='lastName' />
               {errors.lastName && touched.lastName && (
                 <p style={{ color: "red" }}>{errors.lastName}</p>
+              )}
+            </div>
+            <div>
+              <label>Age:</label>
+              <Field type='number' name='age' />
+              {errors.age && touched.age && (
+                <p style={{ color: "red" }}>{errors.age}</p>
+              )}
+            </div>
+            <div>
+              <label>Gender:</label>
+              <Field type='text' name='gender' />
+              {errors.gender && touched.gender && (
+                <p style={{ color: "red" }}>{errors.gender}</p>
+              )}
+            </div>
+            <div>
+              <label>address:</label>
+              <Field type='text' name='address' />
+              {errors.address && touched.address && (
+                <p style={{ color: "red" }}>{errors.address}</p>
+              )}
+            </div>
+            <div>
+              <label>city:</label>
+              <Field type='text' name='city' />
+              {errors.city && touched.city && (
+                <p style={{ color: "red" }}>{errors.city}</p>
               )}
             </div>
             <div>

@@ -59,15 +59,15 @@ const travelers = [
 ];
 
 const users = Yup.object().shape({
-  age: Yup.string().required("Age is required"),
-  gender: Yup.string().required("Gender is required"),
-  address: Yup.string().required("Address is required"),
-  city: Yup.string().required("City is required"),
-  timeduration: Yup.string().required("Time Duration is required")
+  fromTime: Yup.string().required("From Time is required"),
+  toTime: Yup.string().required("To Time is required"),
+  comments: Yup.string(),
 });
 
 const HelpRequestForm = () => {
   let { id } = useParams();
+
+
   return (
     <div>
   <div class="box-form">
@@ -75,11 +75,9 @@ const HelpRequestForm = () => {
     <Formik
       initialValues={{
         user_id : id,
-        age: "",
-        gender: "",
-        address: "",
-        city: "",
-        timeduration: ""
+        fromTime: "",
+        toTime: "",
+        comments: "",
       }}
       validationSchema={users}
       onSubmit={async (values, { setSubmitting, resetForm }) => {
@@ -102,51 +100,35 @@ const HelpRequestForm = () => {
     >
       <Form>
       <div class="inputs">
-        <div>
-          <label>Age:</label>
-          <Field type='text' name='age' />
-          <ErrorMessage
-            name='age'
-            component='div'
-            style={{ color: "red" }}
-          />
-        </div>
-        <div>
-          <label>Gender:</label>
-          <Field type='text' name='gender' />
-          <ErrorMessage
-            name='gender'
-            component='div'
-            style={{ color: "red" }}
-          />
-        </div>
-        <div>
-          <label>Address:</label>
-          <Field type='text' name='address' />
-          <ErrorMessage
-            name='address'
-            component='div'
-            style={{ color: "red" }}
-          />
-        </div>
-        <div>
-          <label>City:</label>
-          <Field type='text' name='city' />
-          <ErrorMessage
-            name='city'
-            component='div'
-            style={{ color: "red" }}
-          />
-        </div>
-        <div>
-          <label>Time Duration:</label>
-          <Field type='text' name='timeduration' />
-          <ErrorMessage
-            name='timeduration'
-            component='div'
-            style={{ color: "red" }}
-          />
-        </div>
+      <div>
+              <label>From Time:</label>
+              <Field type="time" name="fromTime" />
+              <ErrorMessage
+                name="fromTime"
+                component="div"
+                style={{ color: "red" }}
+              />
+            </div>
+            <div>
+              <label>To Time:</label>
+              <Field type="time" name="toTime" />
+              <ErrorMessage
+                name="toTime"
+                component="div"
+                style={{ color: "red" }}
+              />
+            </div>
+            <div>
+              <label>Comments:</label>
+              <Field as="textarea" name="comments" />
+              <ErrorMessage
+                name="comments"
+                component="div"
+                style={{ color: "red" }}
+              />
+            </div>
+       
+        
         <>
         <button type='submit'>Submit</button>
         </>
