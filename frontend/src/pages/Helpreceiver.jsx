@@ -146,9 +146,14 @@ const ProfileDetails = ({ users }) => {
     <div>
       <h2>Profile Details</h2>
       <p>Name: {users.firstName} {users.lastName}</p>
+      <p>Age: {users.age}</p>
+      <p>Gender: {users.gender}</p>
+      <p>Role: {users.role}</p>
+      <p>Address: {users.address}</p>
       <p>Email: {users.email}</p>
       <p>Phone Number: {users.phoneNumber}</p>
       <p>Aadhar Number: {users.aadharNumber}</p>
+
     </div>
   );
 };
@@ -234,7 +239,7 @@ const HelpReceiverDashboard = () => {
         <li className='nav-item'>
           <div className='nav-link collapsed' onClick={() => {
             setShowProfile(true); 
-            setShowServices(false); 
+            setShowServices(false);
             setShowTask(false);
             setShowForm(false);
             }}>
