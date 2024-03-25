@@ -168,4 +168,14 @@ router.get('/getallhelp', async (req, res) => {
   }
 });
 
+router.get('/help-requests', async (req, res) => {
+  try {
+    const helpRequests = await Help.find(); // Fetch all help requests from the database
+    res.status(200).json(helpRequests); // Respond with the fetched help requests
+  } catch (error) {
+    console.error('Error fetching help requests:', error);
+    res.status(500).json({ error: 'Internal Server Error' }); // Handle errors appropriately
+  }
+});
+
 module.exports = router;

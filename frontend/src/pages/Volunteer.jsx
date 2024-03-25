@@ -2,6 +2,33 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
 import axios from 'axios';
+import "./style.css";
+import * as Yup from "yup";
+
+
+const ProfileDetails = ({ users }) => {
+  return (
+    <div>
+      <h2>Profile Details</h2>
+      <p>Name: {users.firstName} {users.lastName}</p>
+      <p>Age: {users.age}</p>
+      <p>Gender: {users.gender}</p>
+      <p>Role: {users.role}</p>
+      <p>Address: {users.address}</p>
+      <p>Email: {users.email}</p>
+      <p>Phone Number: {users.phoneNumber}</p>
+      <p>Aadhar Number: {users.aadharNumber}</p>
+
+    </div>
+  );
+};
+
+const users = Yup.object().shape({
+  fromTime: Yup.string().required("From Time is required"),
+  toTime: Yup.string().required("To Time is required"),
+  comments: Yup.string(),
+});
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,38 +74,36 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const apiUrl = 'http://localhost:5000/api/tasks';
+const apiUrl = 'http://localhost:5000/api/help-requests';
 
-const HelpReceiverDashboard = () => {
-   
-  let { id } = useParams();
-  const [tasks, setTasks] = useState([]);
-  const [users, setUsers] = useState([]);
-  
+const Volunteerdashboard = () => {
+  const { id } = useParams();
+  const [users, setUsers] = useState(null);
+  const [showProfile, setShowProfile] = useState(false);
+  const [helpRequests, setHelpRequests] = useState([]);
+
   useEffect(() => {
-    fetchTasks();
+    fetchHelpRequests();
     fetchUserDetails();
   }, []);
 
-  const fetchTasks = async () => {
+  const fetchHelpRequests = async () => {
     try {
       const response = await axios.get(apiUrl);
-      setTasks(response.data);
+      setHelpRequests(response.data);
     } catch (error) {
-      console.error('Error fetching tasks:', error);
+      console.error('Error fetching help requests:', error);
     }
   };
 
   const fetchUserDetails = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5000/api/user/getProfile/${id}`);
-        console.log("DETAILS", response);
-        setUsers(response.data);
-      } catch (error) {
-        console.error('Error fetching users:', error);
-      }
-    };
-
+    try {
+      const response = await axios.get(`http://localhost:5000/api/user/getProfile/${id}`);
+      setUsers(response.data);
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }
+  };
 
   const classes = useStyles();
 
@@ -106,13 +131,17 @@ const HelpReceiverDashboard = () => {
         </li>
 
         <li className='nav-item'>
-          <div className='nav-link collapsed' to='/create-flights'>
+          <div className='nav-link collapsed' onClick={() => { 
+            setShowProfile(true);
+            setHelpRequests(false); }} >
             <i className='fas fa-fw fa-user'></i>
             <span>profile details</span>
           </div>
         </li>
         <li className='nav-item'>
-          <div className='nav-link collapsed' to='/edit-flights'>
+          <div className='nav-link collapsed' onClick={() => {
+            setShowProfile(false); 
+            setHelpRequests(true); }}>
             <i className='fas fa-fw fa-question-circle'></i>
             <span>view requests</span>
           </div>
@@ -135,38 +164,22 @@ const HelpReceiverDashboard = () => {
         <header className={classes.header}>
           <h1>Volunteer Dashboard</h1>
         </header>
-       <>
-        <table className={classes.table}>
-          <thead>
-            <tr>
-              <th className={classes.tableHeaderCell}>Task Name</th>
-              <th className={classes.tableHeaderCell}>Description</th>
-              <th className={classes.tableHeaderCell}>Volunteer Assigned</th>
-              <th className={classes.tableHeaderCell}>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {tasks.map(task => (
-              <tr key={task.id}>
-                <td className={classes.tableCell}>{task.name}</td>
-                <td className={classes.tableCell}>{task.description}</td>
-                <td className={classes.tableCell}>{task.volunteer}</td>
-                <td className={classes.tableCell}>{task.status}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-       </>
+        {showProfile && <ProfileDetails users={users} />}
 
-       <>
-      Name : {users.firstName} {users.lastName}  <br/>
-      Email : {users.email} <br/>
-      Phone Number : {users.phoneNumber} <br/>
-      Aadhar Number : {users.aadharNumber} <br/>
-       </>
+        <h2>Help Requests</h2>
+        {helpRequests.length > 0 && helpRequests.map((helpRequest) => (
+            <div key={helpRequest._id} className={classes.helpRequest}>
+              <h3>Request ID: {helpRequest._id}</h3>
+              <p>User ID: {helpRequest.user_id}</p>
+              <p>From Time: {helpRequest.fromTime}</p>
+              <p>To Time: {helpRequest.toTime}</p>
+              <p>Comments: {helpRequest.comments}</p>
+            </div>
+          ))}
+          
       </div>
     </div>
   );
 };
 
-export default HelpReceiverDashboard;
+export default Volunteerdashboard;
