@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const apiUrl = 'http://localhost:5000/api/help-requests';
+const apiUrl = 'http://localhost:5000/api/user/getallhelp';
 
 const Volunteerdashboard = () => {
   const { id } = useParams();
@@ -90,6 +90,7 @@ const Volunteerdashboard = () => {
   const fetchHelpRequests = async () => {
     try {
       const response = await axios.get(apiUrl);
+      console.log("RESP", response);
       setHelpRequests(response.data);
     } catch (error) {
       console.error('Error fetching help requests:', error);
@@ -165,17 +166,45 @@ const Volunteerdashboard = () => {
           <h1>Volunteer Dashboard</h1>
         </header>
         {showProfile && <ProfileDetails users={users} />}
+        {helpRequests &&       
+        <div className={classes.content}>
+        <header className={classes.header}>
+        </header>
 
-        <h2>Help Requests</h2>
-        {helpRequests.length > 0 && helpRequests.map((helpRequest) => (
-            <div key={helpRequest._id} className={classes.helpRequest}>
-              <h3>Request ID: {helpRequest._id}</h3>
-              <p>User ID: {helpRequest.user_id}</p>
-              <p>From Time: {helpRequest.fromTime}</p>
-              <p>To Time: {helpRequest.toTime}</p>
-              <p>Comments: {helpRequest.comments}</p>
-            </div>
-          ))}
+        <table className={classes.table}>
+          <thead>
+            <tr>
+              <th className={classes.tableHeaderCell}>Name</th>
+              <th className={classes.tableHeaderCell}>Email</th>
+              <th className={classes.tableHeaderCell}>Phone Number</th>
+              <th className={classes.tableHeaderCell}>Address</th>
+              <th className={classes.tableHeaderCell}>City</th>
+              <th className={classes.tableHeaderCell}>Action</th>
+            </tr>
+          </thead>
+          {/* <tbody>
+            {users.map(user => (
+              <tr key={user.id}>
+                <td className={classes.tableCell}>{user.firstName}</td>
+                <td className={classes.tableCell}>{user.email}</td>
+                <td className={classes.tableCell}>{user.phoneNumber}</td>
+                <td className={classes.tableCell}>{user.aadharNumber}</td>
+                <td className={classes.tableCell}>{user.role}</td>
+                <td>
+                <img src={user.file} alt='' style={{ width: '200px', height: '200px' }} />
+                </td>
+              {user.status === false ? 
+                <td className={classes.tableCell}>
+                  <button className={classes.button} onClick={() => handleApprove(user.email)}>Approve</button>
+                </td>
+              : 'Approved'}
+              </tr>
+            ))}
+          </tbody> */}
+        </table>
+
+      </div>
+      }
           
       </div>
     </div>

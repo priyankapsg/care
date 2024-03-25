@@ -5,17 +5,16 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    fromTime: {
+    timeSlot: {
         type: String,
         required: true
     },
-    toTime: {
+    service: {
         type: String,
         required: true
     },
     comments: {
-        type: String,
-        required: true,
+        type: String
     },
     status: {
         type: Boolean,

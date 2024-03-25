@@ -140,19 +140,19 @@ router.get('/getProfile/:id', async (req, res) => {
   }
 });
 
-router.post("/help", upload.none(), async (req, res) => {
+router.post("/help", async (req, res) => {
   try {
-      const { user_id, fromTime, toTime, comments } = req.body;
+      const { user_id, timeSlot, service, comments } = req.body;
 
       const newUser = new Help({
-        user_id,
-        fromTime, 
-        toTime, 
+        user_id, 
+        timeSlot, 
+        service, 
         comments
         });
         await newUser.save();
-        return res.status(200).json({ msg : "Success! You're now registered" });
-      } catch (error) { 
+        return res.status(200).json({ msg : "Success! Your request is submitted. Please wait for your volunteer to accept it" });
+      } catch (error) {
       console.error('error:', error);
       return res.status(500).json({ msg : 'Something went wrong on our end. Please try again later' });
     }
@@ -170,11 +170,11 @@ router.get('/getallhelp', async (req, res) => {
 
 router.get('/help-requests', async (req, res) => {
   try {
-    const helpRequests = await Help.find(); // Fetch all help requests from the database
-    res.status(200).json(helpRequests); // Respond with the fetched help requests
+    const helpRequests = await Help.find();
+    res.status(200).json(helpRequests);
   } catch (error) {
     console.error('Error fetching help requests:', error);
-    res.status(500).json({ error: 'Internal Server Error' }); // Handle errors appropriately
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 

@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
 import axios from 'axios';
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
 import { toast } from "react-toastify";
 import service1 from "../assets/service1.jpg";
 import service2 from "../assets/service2.jpg";
@@ -58,86 +56,109 @@ const travelers = [
   },
 ];
 
-const users = Yup.object().shape({
-  fromTime: Yup.string().required("From Time is required"),
-  toTime: Yup.string().required("To Time is required"),
-  comments: Yup.string(),
-});
+const list = ["BUYING MEDICINES","COMPANION FOR WALKING","BUYING FOOD"];
+
+const timeSlot1 = [
+  { id: 1, range: '10:00 AM - 12:00 PM' },
+  { id: 2, range: '12:00 PM - 02:00 PM' },
+  { id: 3, range: '02:00 PM - 04:00 PM' },
+  { id: 4, range: '04:00 PM - 06:00 PM' },
+  { id: 5, range: '06:00 PM - 08:00 PM' },
+  { id: 6, range: '08:00 PM - 10:00 PM' }
+];
+
+const timeSlot2 = [
+  { id: 1, range: '10:00 AM - 11:00 AM' },
+  { id: 2, range: '11:00 AM - 12:00 PM' },
+  { id: 3, range: '12:00 PM - 01:00 PM' },
+  { id: 4, range: '01:00 PM - 02:00 PM' },
+  { id: 5, range: '02:00 PM - 03:00 PM' },
+  { id: 6, range: '03:00 PM - 04:00 PM' },
+  { id: 7, range: '04:00 PM - 05:00 PM' },
+  { id: 8, range: '05:00 PM - 06:00 PM' },
+  { id: 9, range: '06:00 PM - 07:00 PM' },
+  { id: 10, range: '07:00 PM - 08:00 PM' },
+  { id: 11, range: '08:00 PM - 09:00 PM' },
+  { id: 12, range: '09:00 PM - 10:00 PM' }
+];
+
+let serviceValue;
+let timeSlots;
+const chooseSlot = () => {
+  timeSlots = list.includes(serviceValue) ? timeSlot2 : timeSlot1;
+}
 
 const HelpRequestForm = () => {
-  let { id } = useParams();
+  const { id } = useParams();
+  const [selectedSlotId, setSelectedSlotId] = useState('');
+  const [comments, setComments] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!selectedSlotId) {
+      setErrorMessage('Please select a time slot');
+      return;
+    }
+    try {
+      const response = await axios.post(`http://localhost:5000/api/user/help`, {
+        user_id: id,
+        timeSlot: selectedSlotId,
+        service: serviceValue,
+        comments: comments
+      });
+      if (response.status === 200) {
+        toast.success(response.data.msg);
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      } else {
+        toast.error(response.data.msg);
+      }
+    } catch (error) {
+      toast.error(error.response.data.msg);
+    }
+  };
+
+  const handleSlotSelect = (event) => {
+    setSelectedSlotId(event.target.value);
+    setErrorMessage('');
+  };
 
   return (
     <div>
-  <div class="box-form">
-    <div className='right'>
-    <Formik
-      initialValues={{
-        user_id : id,
-        fromTime: "",
-        toTime: "",
-        comments: "",
-      }}
-      validationSchema={users}
-      onSubmit={async (values, { setSubmitting, resetForm }) => {
-        try {
-          const response = await axios.post(`http://localhost:5000/api/user/help`, values);
-          if(response.status === 200){
-            toast.success(response.data.msg);
-            setTimeout(() => {
-            window.location.reload();  
-            }, 2000);
-          } else {
-            toast.error(response.data.msg);
-          }
-        } catch (error) {
-          toast.error(error.response.data.msg);
-        } finally {
-          setSubmitting && setSubmitting(false);
-        }
-      }}
-    >
-      <Form>
-      <div class="inputs">
-      <div>
-              <label>From Time:</label>
-              <Field type="time" name="fromTime" />
-              <ErrorMessage
-                name="fromTime"
-                component="div"
-                style={{ color: "red" }}
-              />
+      <h2>Choose a Time Slot</h2>
+      <div className="box-form">
+        <div className="right">
+          <form onSubmit={handleSubmit}>
+            <div className="inputs">
+              <div className="time-slot-grid">
+                <select
+                  name="timeSlot"
+                  onChange={handleSlotSelect}
+                  value={selectedSlotId}
+                >
+                  <option value="" disabled hidden>Please select a time slot</option>
+                  {timeSlots.map(slot => (
+                    <option key={slot.id} value={slot.range}>{slot.range}</option>
+                  ))}
+                </select>
+              </div>
+              {errorMessage && <div className="error">{errorMessage}</div>}
+              <div>
+                <label>Comments:</label>
+                <textarea
+                  name="comments"
+                  value={comments}
+                  onChange={(e) => setComments(e.target.value)}
+                />
+              </div>
+              <button type='submit'>Submit</button>
             </div>
-            <div>
-              <label>To Time:</label>
-              <Field type="time" name="toTime" />
-              <ErrorMessage
-                name="toTime"
-                component="div"
-                style={{ color: "red" }}
-              />
-            </div>
-            <div>
-              <label>Comments:</label>
-              <Field as="textarea" name="comments" />
-              <ErrorMessage
-                name="comments"
-                component="div"
-                style={{ color: "red" }}
-              />
-            </div>
-       
-        
-        <>
-        <button type='submit'>Submit</button>
-        </>
+          </form>
         </div>
-      </Form>
-    </Formik>
-  </div>
-  </div>
-  </div>
+      </div>
+    </div>
   );
 };
 
@@ -266,10 +287,12 @@ const HelpReceiverDashboard = () => {
         <div className='travelersContainer grid'>
           {travelers.map(({ id, destinationImage, serviceName }) => (
             <div key={id} className='singleService' onClick={() => { 
+              serviceValue = serviceName
               setShowProfile(false); 
               setShowServices(false); 
               setShowTask(false);
               setShowForm(true);
+              chooseSlot();
               }}
             >
               <img
