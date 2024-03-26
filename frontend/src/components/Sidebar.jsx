@@ -19,7 +19,7 @@ const Sidebar = () => {
           <div className='sidebar-brand-icon rotate-n-15'>
             <i className='fas fa-laugh-wink'></i>
           </div>
-          <div className='sidebar-brand-text mx-3'>Welcome Admin</div>
+          <div className='sidebar-brand-text mx-3'>Welcome</div>
         </Link>
 
         <li className='nav-item active'>
@@ -28,11 +28,6 @@ const Sidebar = () => {
             <span>Dashboard</span>
           </Link>
         </li>
-
-        <hr className='sidebar-divider my-0' />
-
-        <div className='sidebar-heading'>Interface</div>
-
         <li className='nav-item'>
           <Link className='nav-link collapsed' to='/create-flights'>
             <i className='fas fa-fw fa-user'></i>

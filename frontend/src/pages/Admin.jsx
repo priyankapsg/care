@@ -48,15 +48,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const apiUrl = 'http://localhost:5000/api/user/getallusers';
-
 const Admin = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get(apiUrl);
+        const response = await axios.get(`http://localhost:5000/api/user/getallusers`);
         setUsers(response.data);
       } catch (error) {
         console.error('Error fetching users:', error);
@@ -64,7 +62,6 @@ const Admin = () => {
     };
     fetchUsers();
   }, []);
-
 
   const handleApprove = async (email) => {
     try {

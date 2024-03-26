@@ -227,15 +227,9 @@ const HelpReceiverDashboard = () => {
           <div className='sidebar-brand-icon rotate-n-15'>
             <i className='fas fa-laugh-wink'></i>
           </div>
-          <div className='sidebar-brand-text mx-3'>Welcome Help Receiver Dashboard</div>
+          <div className='sidebar-brand-text mx-3'>Welcome</div>
         </div>
         <li className='nav-item active'>
-          <div className='nav-link'>
-            <i className='fas fa-fw fa-tachometer-alt'></i>
-            <span>Dashboard</span>
-          </div>
-        </li>
-        <li className='nav-item'>
           <div className='nav-link collapsed' onClick={() => { 
             setShowProfile(true); 
             setShowServices(false); 

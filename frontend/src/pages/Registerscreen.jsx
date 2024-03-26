@@ -44,9 +44,9 @@ const Registerscreen = () => {
   return (
     <div>
       <SimpleNavbar />
-      <div class="box-form">
-	<div class="left">
-		<div class="overlay">
+      <div className="box-form">
+	<div className="left">
+		<div className="overlay">
 		<h2>REGISTER</h2>
 		<p>Create your account and unlock a world of opportunities. Join us today and make your mark.</p>
 		</div>
@@ -105,7 +105,7 @@ const Registerscreen = () => {
       >
         {({ errors, touched }) => (
           <Form>
-            <div class="inputs">
+            <div className="inputs">
             <div>
               <label>First Name:</label>
               <Field type='text' name='firstName' />
@@ -211,7 +211,7 @@ const Registerscreen = () => {
                 <p style={{ color: "red" }}>{errors.document}</p>
               )}
             </div>
-            <button class="button-88" type='submit'>register</button>
+            <button className="button-88" type='submit'>register</button>
             <p>
               Already have an account? <Link to='/login'>login</Link>
             </p>

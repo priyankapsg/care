@@ -5,6 +5,7 @@ const Help = require('../models/helpReceiver');
 const multer = require('multer');
 const nodemailer = require('nodemailer');
 const upload = multer();
+const mongoose = require('mongoose');
 
 router.post("/register", upload.none(), async (req, res) => {
   try {
@@ -142,29 +143,42 @@ router.get('/getProfile/:id', async (req, res) => {
 
 router.post("/help", async (req, res) => {
   try {
-      const { user_id, timeSlot, service, comments } = req.body;
+    const { user_id, timeSlot, service, comments } = req.body;
 
-      const newUser = new Help({
-        user_id, 
-        timeSlot, 
-        service, 
-        comments
-        });
-        await newUser.save();
-        return res.status(200).json({ msg : "Success! Your request is submitted. Please wait for your volunteer to accept it" });
-      } catch (error) {
-      console.error('error:', error);
-      return res.status(500).json({ msg : 'Something went wrong on our end. Please try again later' });
-    }
+    const newUser = new Help({
+      user_id,
+      timeSlot,
+      service,
+      comments
+    });
+
+    await newUser.save();
+    
+    return res.status(200).json({ msg : "Success! Your request is submitted. Please wait for your volunteer to accept it" });
+  } catch (error) {
+    console.error('error:', error);
+    return res.status(500).json({ msg : 'Something went wrong on our end. Please try again later' });
+  }
 });
 
 router.get('/getallhelp', async (req, res) => {
   try {
-      const nonadminusers = await Help.find({ status: false });
-      return res.status(200).json(nonadminusers);
+    const helpData = await Help.find().lean();
+    const userData = await User.find().lean(); 
+    const userDataMap = {};
+    userData.forEach(user => {
+      userDataMap[user._id.toString()] = user;
+    });
+
+    const finalData = helpData.map(help => ({
+      ...help,
+      userData: userDataMap[help.user_id.toString()]
+    }));
+
+    return res.status(200).json(finalData);
   } catch (error) {
     console.error('error:', error);
-    return res.status(500).json({ msg : 'Something went wrong on our end. Please try again later' });
+    return res.status(500).json({ msg: 'Something went wrong on our end. Please try again later' });
   }
 });
 

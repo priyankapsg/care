@@ -18,9 +18,9 @@ const navigate = useNavigate();
   return (
     <div>
       <SimpleNavbar />
-    <div class="box-form">
-    <div class="left">
-    <div class="overlay">
+    <div className="box-form">
+    <div className="left">
+    <div className="overlay">
     <h2>OTP VERIFY</h2>
     <p>Unlock the door to endless possibilities. Sign in and embark on your journey.</p>
     </div>
@@ -50,7 +50,7 @@ const navigate = useNavigate();
       }}
     >
       <Form>
-      <div class="inputs">
+      <div className="inputs">
         <div>
           <label>Email:</label>
           <Field type='email' name='email' />

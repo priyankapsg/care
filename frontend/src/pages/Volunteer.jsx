@@ -3,8 +3,6 @@ import { Link, useParams } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
 import axios from 'axios';
 import "./style.css";
-import * as Yup from "yup";
-
 
 const ProfileDetails = ({ users }) => {
   return (
@@ -23,21 +21,14 @@ const ProfileDetails = ({ users }) => {
   );
 };
 
-const users = Yup.object().shape({
-  fromTime: Yup.string().required("From Time is required"),
-  toTime: Yup.string().required("To Time is required"),
-  comments: Yup.string(),
-});
-
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    height: '100vh', // Set the height to fill the viewport
+    height: '100vh',
   },
   content: {
-    flex: 1, // Allow the content to fill the available space
-    overflowX: 'auto', // Enable horizontal scrolling if needed
+    flex: 1,
+    overflowX: 'auto',
   },
   header: {
     backgroundColor: '#333',
@@ -59,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '8px',
     textAlign: 'center',
   },
-  button: {
+  button1: {
     backgroundColor: '#4CAF50',
     color: 'white',
     border: 'none',
@@ -72,9 +63,20 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
     borderRadius: '4px',
   },
+  button2: {
+    backgroundColor: 'Red',
+    color: 'white',
+    border: 'none',
+    padding: '5px 10px',
+    textAlign: 'center',
+    textDecoration: 'none',
+    display: 'inline-block',
+    fontSize: '14px',
+    margin: '2px',
+    cursor: 'pointer',
+    borderRadius: '4px',
+  },
 }));
-
-const apiUrl = 'http://localhost:5000/api/user/getallhelp';
 
 const Volunteerdashboard = () => {
   const { id } = useParams();
@@ -89,8 +91,7 @@ const Volunteerdashboard = () => {
 
   const fetchHelpRequests = async () => {
     try {
-      const response = await axios.get(apiUrl);
-      console.log("RESP", response);
+      const response = await axios.get(`http://localhost:5000/api/user/getallhelp`);      
       setHelpRequests(response.data);
     } catch (error) {
       console.error('Error fetching help requests:', error);
@@ -121,17 +122,9 @@ const Volunteerdashboard = () => {
           <div className='sidebar-brand-icon rotate-n-15'>
             <i className='fas fa-laugh-wink' color="black"></i>
           </div>
-          <div className='sidebar-brand-text mx-3'>Welcome </div>
+          <div className='sidebar-brand-text mx-3'>Welcome</div>
         </div>
-
         <li className='nav-item active'>
-          <div className='nav-link'>
-            <i className='fas fa-fw fa-tachometer-alt'></i>
-            <span>Dashboard</span>
-          </div>
-        </li>
-
-        <li className='nav-item'>
           <div className='nav-link collapsed' onClick={() => { 
             setShowProfile(true);
             setHelpRequests(false); }} >
@@ -142,7 +135,9 @@ const Volunteerdashboard = () => {
         <li className='nav-item'>
           <div className='nav-link collapsed' onClick={() => {
             setShowProfile(false); 
-            setHelpRequests(true); }}>
+            setHelpRequests(true); 
+            fetchHelpRequests();
+            }}>
             <i className='fas fa-fw fa-question-circle'></i>
             <span>view requests</span>
           </div>
@@ -175,32 +170,33 @@ const Volunteerdashboard = () => {
           <thead>
             <tr>
               <th className={classes.tableHeaderCell}>Name</th>
-              <th className={classes.tableHeaderCell}>Email</th>
               <th className={classes.tableHeaderCell}>Phone Number</th>
+              <th className={classes.tableHeaderCell}>Service</th>
               <th className={classes.tableHeaderCell}>Address</th>
               <th className={classes.tableHeaderCell}>City</th>
               <th className={classes.tableHeaderCell}>Action</th>
             </tr>
           </thead>
-          {/* <tbody>
-            {users.map(user => (
-              <tr key={user.id}>
-                <td className={classes.tableCell}>{user.firstName}</td>
-                <td className={classes.tableCell}>{user.email}</td>
-                <td className={classes.tableCell}>{user.phoneNumber}</td>
-                <td className={classes.tableCell}>{user.aadharNumber}</td>
-                <td className={classes.tableCell}>{user.role}</td>
-                <td>
-                <img src={user.file} alt='' style={{ width: '200px', height: '200px' }} />
-                </td>
+          <tbody>
+            {helpRequests.length > 0 && helpRequests.map(user => (
+              <tr key={user._id}>
+                <td className={classes.tableCell}>{user.userData.firstName}</td>
+                <td className={classes.tableCell}>{user.userData.phoneNumber}</td>
+                <td className={classes.tableCell}>{user.service}</td>
+                <td className={classes.tableCell}>{user.userData.address}</td>
+                <td className={classes.tableCell}>{user.userData.city}</td>
               {user.status === false ? 
                 <td className={classes.tableCell}>
-                  <button className={classes.button} onClick={() => handleApprove(user.email)}>Approve</button>
+                  <button className={classes.button1} onClick={() => handleApprove(user.email)}>Start</button>
                 </td>
-              : 'Approved'}
+              :
+              <td className={classes.tableCell}>
+              <button className={classes.button2} onClick={() => handleApprove(user.email)}>Stop</button>
+              </td>
+              }
               </tr>
             ))}
-          </tbody> */}
+          </tbody>
         </table>
 
       </div>
