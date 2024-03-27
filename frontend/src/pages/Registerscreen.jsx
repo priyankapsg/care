@@ -75,7 +75,7 @@ const Registerscreen = () => {
             formData.append("age", values.age);
             formData.append("gender", values.gender);
             formData.append("address", values.address);
-            formData.append("city", values.city);
+            formData.append("city", values.city.toLowerCase());
             formData.append("email", values.email);
             formData.append("password", values.password);
             formData.append("phoneNumber", values.phoneNumber);

@@ -161,26 +161,29 @@ router.post("/help", async (req, res) => {
   }
 });
 
-router.get('/getallhelp', async (req, res) => {
+router.get('/getallhelp/:id', async (req, res) => {
   try {
+    const userId = req.params.id;
     const helpData = await Help.find().lean();
     const userData = await User.find().lean(); 
     const userDataMap = {};
     userData.forEach(user => {
       userDataMap[user._id.toString()] = user;
     });
-
     const finalData = helpData.map(help => ({
       ...help,
       userData: userDataMap[help.user_id.toString()]
     }));
+    const userCity = userDataMap[userId] ? userDataMap[userId].city : null;
+    const filteredData = finalData.filter(help => help.userData && help.userData.city === userCity);
 
-    return res.status(200).json(finalData);
+    return res.status(200).json(filteredData);
   } catch (error) {
     console.error('error:', error);
     return res.status(500).json({ msg: 'Something went wrong on our end. Please try again later' });
   }
 });
+
 
 router.get('/help-requests', async (req, res) => {
   try {

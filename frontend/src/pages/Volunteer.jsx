@@ -91,7 +91,7 @@ const Volunteerdashboard = () => {
 
   const fetchHelpRequests = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/user/getallhelp`);      
+      const response = await axios.get(`http://localhost:5000/api/user/getallhelp/${id}`);      
       setHelpRequests(response.data);
     } catch (error) {
       console.error('Error fetching help requests:', error);
@@ -172,8 +172,8 @@ const Volunteerdashboard = () => {
               <th className={classes.tableHeaderCell}>Name</th>
               <th className={classes.tableHeaderCell}>Phone Number</th>
               <th className={classes.tableHeaderCell}>Service</th>
+              <th className={classes.tableHeaderCell}>Time Slot</th>
               <th className={classes.tableHeaderCell}>Address</th>
-              <th className={classes.tableHeaderCell}>City</th>
               <th className={classes.tableHeaderCell}>Action</th>
             </tr>
           </thead>
@@ -183,11 +183,11 @@ const Volunteerdashboard = () => {
                 <td className={classes.tableCell}>{user.userData.firstName}</td>
                 <td className={classes.tableCell}>{user.userData.phoneNumber}</td>
                 <td className={classes.tableCell}>{user.service}</td>
+                <td className={classes.tableCell}>{user.timeSlot}</td>
                 <td className={classes.tableCell}>{user.userData.address}</td>
-                <td className={classes.tableCell}>{user.userData.city}</td>
-              {user.status === false ? 
+              {user.status === "Requested" ? 
                 <td className={classes.tableCell}>
-                  <button className={classes.button1} onClick={() => handleApprove(user.email)}>Start</button>
+                  <button className={classes.button1} onClick={() => handleApprove(user.email)}>Accept</button>
                 </td>
               :
               <td className={classes.tableCell}>

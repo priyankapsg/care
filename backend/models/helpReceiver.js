@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+const allowedStatus = ['Requested', 'Accepted', 'Started', 'Verified', 'Ended', 'Stopped'];
+
 const userSchema = new mongoose.Schema({
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
@@ -18,8 +20,9 @@ const userSchema = new mongoose.Schema({
         type: String
     },
     status: {
-        type: Boolean,
-        default: false   
+        type: String,
+        enum: allowedStatus,
+        default: 'Requested'
     }
 }, {
     timestamps: true
