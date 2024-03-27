@@ -87,6 +87,10 @@ const Admin = () => {
             <tr>
               <th className={classes.tableHeaderCell}>Name</th>
               <th className={classes.tableHeaderCell}>Email</th>
+              <th className={classes.tableHeaderCell}>Age</th>
+              <th className={classes.tableHeaderCell}>Gender</th>
+              <th className={classes.tableHeaderCell}>Address</th>
+              <th className={classes.tableHeaderCell}>City</th>
               <th className={classes.tableHeaderCell}>Phone Number</th>
               <th className={classes.tableHeaderCell}>Aadhar Number</th>
               <th className={classes.tableHeaderCell}>role</th>
@@ -99,6 +103,10 @@ const Admin = () => {
               <tr key={user.id}>
                 <td className={classes.tableCell}>{user.firstName}</td>
                 <td className={classes.tableCell}>{user.email}</td>
+                <td className={classes.tableCell}>{user.age}</td>
+                <td className={classes.tableCell}>{user.gender}</td>
+                <td className={classes.tableCell}>{user.address}</td>
+                <td className={classes.tableCell}>{user.city}</td>
                 <td className={classes.tableCell}>{user.phoneNumber}</td>
                 <td className={classes.tableCell}>{user.aadharNumber}</td>
                 <td className={classes.tableCell}>{user.role}</td>

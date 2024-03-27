@@ -277,6 +277,7 @@ const HelpReceiverDashboard = () => {
         {showProfile && <ProfileDetails users={users} />}
         {showServices &&             
         <div id="Travelers" className='travelers container section'>
+          <h1>AVAILABLE SERVICES</h1>
         <div className='sectionContainer'>
         <div className='travelersContainer grid'>
           {travelers.map(({ id, destinationImage, serviceName }) => (
